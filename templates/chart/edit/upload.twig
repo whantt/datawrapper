@@ -1,0 +1,22 @@
+<link href="{{ config.static_path }}/vendor/handsontable-new/handsontable.full.min.css" rel="stylesheet">
+<style type="text/css">
+
+#ht-data-upload {
+	max-width: 800px;
+	margin: 20px auto;
+	height: 300px;
+}
+</style>
+
+<h1>Step 1: Copy &amp; paste your table</h1>
+
+<div id="ht-data-upload" style="width: 100%; max-height: 500px; overflow: auto"></div>
+
+<a class="btn btn-upload">or upload a CSV</a>
+
+
+{# <div class="buttons below-table pull-right">
+    <a class="btn transpose">{% trans "Transpose dataset" %}</a>
+    <a class="btn computed-columns"><i class="fa fa-calculator"></i> {% trans "computed columns / add-btn" %}...</a>
+    <a class="btn disabled" id="reset-data-changes"><i class="fa fa-undo"></i> {% trans "Revert changes" %}...</a>
+</div> #}

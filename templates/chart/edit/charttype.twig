@@ -1,0 +1,23 @@
+<h1>Step 2: Pick a chart type</h1>
+
+<style type="text/css">
+.vis-thumb {
+	display: inline-block;
+	padding: 20px;
+	font-family: quicksand;
+}
+.vis-thumb svg {
+	width: 80px;
+	height: 80px;
+}
+
+</style>
+
+<div class="vis-thumbs">
+    {% for vis in visualizations %}{% if vis.namespace != 'map' and vis.id not in config.vis_archive %}{% if vis.title %}
+    <div class="vis-thumb{% if vis.id == chart.type %} active{% endif %}" data-id="{{ vis.id }}" data-title="{{ vis.title }}" data-static-path="{{ vis.__static_path }}">
+        {{ vis.icon | raw }}
+        <div class="title">{{ vis.title | raw }}</div>
+    </div>
+    {% endif %}{% endif %}{% endfor %}
+</div>

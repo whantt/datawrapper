@@ -31,6 +31,7 @@
     "queue-async": "1.0.7",
     "requirejs": "2.1.20",
     "underscore": "1.8.3",
-    "ScrollToFixed": "scrolltofixed#^1.0.6"
+    "ScrollToFixed": "scrolltofixed#^1.0.6",
+    "handsontable-new": "handsontable#0.31.0"
   }
 }

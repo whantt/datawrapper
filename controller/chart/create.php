@@ -36,6 +36,10 @@ $app->map('/chart/create', function() use ($app) {
             }
         }
         $chart->save();
+        if (isset($cfg['singlepage']) && $cfg['singlepage']) {
+            $app->redirect('/chart/'.$chart->getId().'/edit#'.$step);
+            return;
+        }
         $app->redirect('/chart/'.$chart->getId().'/'.$step);
     }
 })->via('GET', 'POST');

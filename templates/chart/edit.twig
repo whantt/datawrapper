@@ -1,0 +1,84 @@
+{% extends "core.twig" %}
+
+{% block content %}
+
+{{ parent() }}
+
+<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+<style type="text/css">
+body {
+    background: #f8f8f8;
+}
+a.brand {
+    font-family: quicksand;
+}
+html .navbar .navbar-inner {
+    background: white;
+}
+html .btn {
+    background: #ededed;
+    text-shadow: none;
+    border-radius: 2px;
+    font-size: 17px;
+    font-family: quicksand;
+    line-height: 30px;
+    padding: 4px 20px;
+}
+h1 { text-align:center; font-family: quicksand; margin-bottom: 40px; }
+p.lead {
+    max-width: 720px;
+    margin: 0 auto 20px;
+    font-family: quicksand; 
+    font-size: 20px;
+    line-height: 28px;
+}
+.dw-edit-step {
+    margin-bottom: 40px;
+    text-align: center;
+}
+</style>
+
+<script type="text/javascript">
+
+    dw.backend.ready(function() {
+
+        dw.backend.__currentData = {{ chart.loadData | json | raw }};
+        // initialize current chart
+        var chart = dw.backend.currentChart = dw.chart(JSON.parse("{{ chart.toJSON | raw }}"));
+
+        chart
+            .locale(dw.backend.currentChart.get('language') || '{{ chartLocale }}')
+            .metricPrefix({{ metricPrefix | json | raw }});
+
+        dw.backend.syncChart(chart);
+
+        _.templateSettings = {
+            interpolate : /\{\{(.+?)\}\}/g
+        };
+
+        require(['dw/chart/edit'], function(edit) {
+            edit(chart);
+        });
+    });
+
+</script>
+
+
+<div class="dw-edit-step" style="text-align:center" data-step="1">
+	{% include "chart/edit/upload.twig" %}
+</div>
+
+<div class="dw-edit-step" data-step="2">
+	{% include "chart/edit/charttype.twig" %}
+</div>
+
+<div class="dw-edit-step" data-step="3">
+	{% include "chart/edit/customize.twig" %}
+</div>
+
+<div class="dw-edit-step dw-create-publish" data-step="4">
+	{% include "chart/edit/publish.twig" %}
+</div>
+
+
+{% endblock %}

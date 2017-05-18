@@ -1,0 +1,429 @@
+<div class="section refine-the-chart" style="left: -10000px; position: static;">
+    
+    <div class="form-horizontal vis-options vis-options-refine">
+        
+        <fieldset id="visOptions">
+            
+            <div id="vis-options-g-x-axis" data-group-key="g-x-axis" class="vis-option-type-group group-open">
+                <label class="group-title">
+                    <i class="fa fa-angle-double-right expand-group"></i>
+                    <i class="fa fa-angle-double-down collapse-group"></i>
+                    x-Achse einstellen
+                </label>
+                <div class="option-group-content">
+                    <div class="control-group vis-option-group vis-option-type-select-axis-column" id="vis-options-x-axis">
+                        <a title="" class="vis-option-help" data-original-title="Wähle die Datenspalte die die x-Werte enthält"><span>?</span></a>
+                        
+                        
+                        <div class="axis-column">
+                            <label class="control-label" for="x-axis-x">Spalte wählen</label>
+                            <div class="controls" style="margin-bottom: 10px; max-width: 70%;">
+                                <select id="x-axis-x" data-axis="x"><option value="U">U</option><option value="V">V</option><option value="S">S</option></select>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-custom-range" id="vis-options-custom-range-x">
+                        <a title="" class="vis-option-help" data-original-title="This feature allows you to explicitely extend the y axis to custom values. Swap min/max to invert the axis."><span>?</span></a>
+                        
+                        
+                        <label class="control-label">Achsenbereich:</label>
+                        <div class="controls" style="max-width: 68.1081%;">
+                            <input type="text" class="min" placeholder="min"> -
+                            <input type="text" class="max" placeholder="max">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-text" id="vis-options-custom-ticks-x">
+                        <a title="" class="vis-option-help" data-original-title="Komma-getrennte Liste von benutzerdefinierten Achsenticks"><span>?</span></a>
+                        
+                        
+                        <label class="control-label" for="custom-ticks-x">Eigene Achsenticks</label>
+                        <div class="controls form-inline" style="max-width: 62.4324%;">
+                            <input type="text" placeholder="z.B. 2000,2005,2012" style="width:auto" id="custom-ticks-x" value="">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-custom-format-numeral" id="vis-options-x-tick-format">
+                        <a title="" class="vis-option-help" data-original-title="help / number format"><span>?</span></a>
+                        
+                        
+                        <label class="control-label">x / tick-format:</label>
+                        <div class="controls" style="max-width: 68.9189%;">
+                            <select style="width:50%" id="x-tick-format" data-lbl-custom="benutzerdef."><option value="0,0.[00]">1,000[.00]</option><option value="0">0</option><option value="0.0">0.0</option><option value="0.00">0.00</option><option value="0.000">0.000</option><option value="0.[0]">0.[0]</option><option value="0.[00]">0.[00]</option><option value="0,0">10,000</option><option value="0o">1st</option><option value="0a">123k</option><option value="0.[0]a">123.4k</option><option value="0.[00]a">123.45k</option><option value="--">(benutzerdef.)</option></select>
+                            <input style="width: 40%; background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAkCAYAAADo6zjiAAAAAXNSR0IArs4c6QAAAz5JREFUWAndWL1LY0EQn7xEBTWinmDuLk1UEEmhwcbuROT+hvNiZyVYpbASbCzk/o/ACVapUkkCAe1iQAsbPzmjoFFMUBST3Pz2ssv7yHtqfA/hFsLO1878dvbN7KqPeKytrX19fn7+xeR0vV7/Aplbw+fznbOvTCAQWF5ZWflj9utrBC9w4E9mpZs8A7lmEONmEBp27nVwbAQxGlk27Etjbtog8ZaxxNLcPnMn/M1iIQMfOv5vAGNjY5RIJAiz3fA0A9FolHp6egiz3fAUANe+iCvnZiA8BdAsoFlmANDR0UHDw8PU19dntqNWdRZHJkFA8r29vbSwsEDBYJBqtRqlUina3d0V6lZ10rfTrDIwNTUlgsNY0zSamZlR61rVKQcOhALgYOOpSgHY2dmhcrksguEItra2VOBWdcqBA+FbXV2tSz0+tHA4TKVSiW5ubqRYzE46g+ELDJdkkU2yjffBmQHAC2tdVTOQEoOYUEfgqvdXOOObsR/vgw8D0MD4TfWBV4B2NPH7/RSLxUTfR99AP7m/v6eLiwva3t6mo6Mjy3rOwmfXAMTjcRoaGjIEwUWE38jICG1sbNDBwYFBD8a1I8hkMnj3id/t7S1VKhUVDI1tcnJS8XrCtQycnp6K9n18fKxKeH5+XuweAXFEzUaAy+G82VutmfFLsnw+r0xk+qVgb29PkoYZGcjw76dB+g5maWlJ3Jzd3d2EdwCXGuVyOdKD07vX0JHY8FovfA89MDAgKgDBMfb39+nw8NDWpZ97fnl2djbJxxDiRfjrKGhr/QpFJBKhx8dHamtrI94chUIhUZ74QE9OTiwe/sG0iO0F+rvD3oqovb2d5ubmCIAwcMGtr6/T09OTYZlrZTg4OGhwjEBXV1dKhlLs6upSvCRcK8PFxUW6vLykYrEoOiCedaOjozIOPTw8qPJUQiZcAwCnyII5EzJYOp2WpGF+8xHwh4r73DJQ59ilfsgPL5lMUqFQ0KsEDV+tZCDLq3+YvW1uboq6R/13dnaKj+3u7o6q1arZVM9n3wwAfYOby3feXb/eE2jsGM86+bQz6/U87x4PkuU3HwH/h+OMF06wg992x6EPZKaxBmvhA77+AtwhRvYQqQFKAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" type="text" id="x-tick-format-user" class="" autocomplete="off">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="vis-options-g-y-axis" data-group-key="g-y-axis" class="vis-option-type-group group-open">
+                <label class="group-title">
+                    <i class="fa fa-angle-double-right expand-group"></i>
+                    <i class="fa fa-angle-double-down collapse-group"></i>
+                    y-Achse einstellen
+                </label>
+                <div class="option-group-content">
+                    <div class="control-group vis-option-group vis-option-type-radio" id="vis-options-scale-y">
+                        <a title="" class="vis-option-help" data-original-title="Für Werte die sich über mehrere Größenordnungen verteilen ist die die logarithmische Skala unter Umständen die bessere Wahl."><span>?</span></a>
+                        
+                        
+                        <label class="control-label" for="scale-y">Skala</label>
+                        <div class="controls form-inline" style="max-width: 82.1622%;">
+                            <label class="radio">
+                                <input type="radio" name="scale-y" value="linear" checked="checked">&nbsp;linear
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="scale-y" value="log">&nbsp;logarithmisch
+                            </label>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-checkbox hide-smart" id="vis-options-y-grid-subdivide">
+                        
+                        
+                        <label class="checkbox" style="text-align:left;width:100%;position:relative;left:0" for="y-grid-subdivide"><input type="checkbox" id="y-grid-subdivide"> logarithmisches Gitter unterteilen</label>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-custom-range" id="vis-options-custom-range-y">
+                        <a title="" class="vis-option-help" data-original-title="Erlaubt die y-Achse auf einen benutzerdef. Bereich zu erweitern. Vertausche min/max um die Richtung umzukehren."><span>?</span></a>
+                        
+                        
+                        <label class="control-label">Achsenbereich:</label>
+                        <div class="controls" style="max-width: 68.1081%;">
+                            <input type="text" class="min" placeholder="min"> -
+                            <input type="text" class="max" placeholder="max">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-text" id="vis-options-custom-ticks-y">
+                        <a title="" class="vis-option-help" data-original-title="Erlaubt fest definierte Achsenticks für die horizontalen Gitterlinien zu setzen."><span>?</span></a>
+                        
+                        
+                        <label class="control-label" for="custom-ticks-y">Eigene Achsenticks</label>
+                        <div class="controls form-inline" style="max-width: 62.4324%;">
+                            <input type="text" placeholder="z.B. 10,20,50" style="width:auto" id="custom-ticks-y" value="">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-custom-format-numeral" id="vis-options-y-grid-format">
+                        <a title="" class="vis-option-help" data-original-title="Wähle ein Zahlenformat aus der Liste oder benutze ein eigenes Format (siehe numeraljs.com für akzeptierte Formate)"><span>?</span></a>
+                        
+                        
+                        <label class="control-label">Zahlenformat:</label>
+                        <div class="controls" style="max-width: 70%;">
+                            <select style="width:50%" id="y-grid-format" data-lbl-custom="benutzerdef."><option value="0,0.[00]">1,000[.00]</option><option value="0">0</option><option value="0.0">0.0</option><option value="0.00">0.00</option><option value="0.000">0.000</option><option value="0.[0]">0.[0]</option><option value="0.[00]">0.[00]</option><option value="0,0">10,000</option><option value="0o">1st</option><option value="0a">123k</option><option value="0.[0]a">123.4k</option><option value="0.[00]a">123.45k</option><option value="--">(benutzerdef.)</option></select>
+                            <input style="width: 40%; background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAkCAYAAADo6zjiAAAAAXNSR0IArs4c6QAAAz5JREFUWAndWL1LY0EQn7xEBTWinmDuLk1UEEmhwcbuROT+hvNiZyVYpbASbCzk/o/ACVapUkkCAe1iQAsbPzmjoFFMUBST3Pz2ssv7yHtqfA/hFsLO1878dvbN7KqPeKytrX19fn7+xeR0vV7/Aplbw+fznbOvTCAQWF5ZWflj9utrBC9w4E9mpZs8A7lmEONmEBp27nVwbAQxGlk27Etjbtog8ZaxxNLcPnMn/M1iIQMfOv5vAGNjY5RIJAiz3fA0A9FolHp6egiz3fAUANe+iCvnZiA8BdAsoFlmANDR0UHDw8PU19dntqNWdRZHJkFA8r29vbSwsEDBYJBqtRqlUina3d0V6lZ10rfTrDIwNTUlgsNY0zSamZlR61rVKQcOhALgYOOpSgHY2dmhcrksguEItra2VOBWdcqBA+FbXV2tSz0+tHA4TKVSiW5ubqRYzE46g+ELDJdkkU2yjffBmQHAC2tdVTOQEoOYUEfgqvdXOOObsR/vgw8D0MD4TfWBV4B2NPH7/RSLxUTfR99AP7m/v6eLiwva3t6mo6Mjy3rOwmfXAMTjcRoaGjIEwUWE38jICG1sbNDBwYFBD8a1I8hkMnj3id/t7S1VKhUVDI1tcnJS8XrCtQycnp6K9n18fKxKeH5+XuweAXFEzUaAy+G82VutmfFLsnw+r0xk+qVgb29PkoYZGcjw76dB+g5maWlJ3Jzd3d2EdwCXGuVyOdKD07vX0JHY8FovfA89MDAgKgDBMfb39+nw8NDWpZ97fnl2djbJxxDiRfjrKGhr/QpFJBKhx8dHamtrI94chUIhUZ74QE9OTiwe/sG0iO0F+rvD3oqovb2d5ubmCIAwcMGtr6/T09OTYZlrZTg4OGhwjEBXV1dKhlLs6upSvCRcK8PFxUW6vLykYrEoOiCedaOjozIOPTw8qPJUQiZcAwCnyII5EzJYOp2WpGF+8xHwh4r73DJQ59ilfsgPL5lMUqFQ0KsEDV+tZCDLq3+YvW1uboq6R/13dnaKj+3u7o6q1arZVM9n3wwAfYOby3feXb/eE2jsGM86+bQz6/U87x4PkuU3HwH/h+OMF06wg992x6EPZKaxBmvhA77+AtwhRvYQqQFKAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" type="text" id="y-grid-format-user" class="hidden" autocomplete="off">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group vis-option-group vis-option-type-radio" id="vis-options-y-grid-labels">
+                        <a title="" class="vis-option-help" data-original-title="help / grid-labels"><span>?</span></a>
+                        
+                        
+                        <label class="control-label" for="y-grid-labels">Hilfslinien beschriften</label>
+                        <div class="controls form-inline" style="max-width: 59.1892%;">
+                            <label class="radio">
+                                <input type="radio" name="y-grid-labels" value="inside">&nbsp;innen
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="y-grid-labels" value="outside">&nbsp;außen
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="y-grid-labels" value="auto" checked="checked">&nbsp;automatisch
+                            </label>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="vis-options-g-lines" data-group-key="g-lines" class="vis-option-type-group">
+                <label class="group-title">
+                    <i class="fa fa-angle-double-right expand-group"></i>
+                    <i class="fa fa-angle-double-down collapse-group"></i>
+                    Linien einstellen
+                </label>
+                <div class="option-group-content">
+                    <div class="control-group vis-option-group vis-option-type-base-color" id="vis-options-base-color">
+                        
+                        
+                        <div id="base-color">
+                            <div class="control-group">
+                                <label class="control-label" for="select-color">Basisfarbe</label>
+                                <div class="controls" style="max-width: 74.8649%;">
+                                    <div class="base-color-picker color-picker" style="background: rgb(31, 119, 180);">
+                                        <div class="arrow"></div>
+                                    </div>
+                                    <span class="custom-color-selector-head">
+                                        <a href="#" class="btn btn-small custom" role="button">customize colors...</a>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="custom-color-selector-body" style="display:none">
+                                <div class="row">
+                                    <div class="span2" style="width:43%">
+                                        <h4>Select element(s):</h4>
+                                        <ul class="dataseries unstyled">
+                                            <li data-series="V"><div class="color">×</div><label>V</label></li><li data-series="S"><div class="color">×</div><label>S</label></li></ul>
+                                            <div style="font-size:12px;text-align:center;margin-bottom:10px;">
+                                                Select: &nbsp;
+                                                <a class="select-all">all</a> &nbsp;
+                                                <a class="select-none" onclick="$('.dataseries li').removeClass('selected')">none</a> &nbsp;
+                                                <a class="select-invert" onclick="$('.dataseries li').toggleClass('selected')">invert</a>
+                                            </div>
+                                        </div>
+                                        <div class="span2" style="width:42%;">
+                                            <h4>Choose a color:</h4>
+                                            <div class="info">
+                                            Please select an element on the left to change colors for individual elements...                        </div>
+                                            <div class="select" style="display:none">
+                                                <div class="color-picker">
+                                                    <div class="arrow"></div>
+                                                </div>
+                                                <button class="btn reset-color">Reset</button>
+                                            </div>
+                                            <button style="margin-top:20px" class="btn reset-all-colors">Reset all colors</button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group vis-option-group vis-option-type-d3-lines-line-width" id="vis-options-line-widths">
+                            
+                            
+                            <label class="control-label" for="line-widths">Linienstärke</label>
+                            <div class="controls form-inline d3-line-styles" style="max-width: 72.7027%;"><div class="d3-line-key"><div class="display width-0"></div><div class="key">V</div></div><div class="d3-line-key"><div class="display width-0"></div><div class="key">S</div></div></div>
+                            <script type="text/javascript">
+                            dw.backend.on('sync-option:d3-lines-line-width', function(args) {
+                            require(['/static/plugins/d3-lines/line-style-options.js'], function(syncLineStyleOption) {
+                            syncLineStyleOption('width', 4)(args);
+                            });
+                            });
+                            
+                            </script>
+                        </div>
+                        
+                        <div class="control-group vis-option-group vis-option-type-d3-lines-line-dashes" id="vis-options-line-dashes">
+                            
+                            
+                            <label class="control-label" for="line-dashes">Strichelung</label>
+                            <div class="controls form-inline d3-line-styles" style="max-width: 73.7838%;"><div class="d3-line-key"><div class="display dash-0"></div><div class="key">V</div></div><div class="d3-line-key"><div class="display dash-0"></div><div class="key">S</div></div></div>
+                            <script type="text/javascript">
+                            dw.backend.on('sync-option:d3-lines-line-dashes', function(args) {
+                            require(['/static/plugins/d3-lines/line-style-options.js'], function(syncLineStyleOption) {
+                            syncLineStyleOption('dash', 4)(args);
+                            });
+                            });
+                            </script>
+                        </div>
+                        
+                        <div class="control-group vis-option-group vis-option-type-select" id="vis-options-interpolation">
+                            
+                            
+                            <label class="control-label" for="interpolation">Interpolierung</label>
+                            <div class="controls" style="max-width: 70%;">
+                                <select id="interpolation" style="width:auto">
+                                    <option value="linear" selected="selected">linear</option>
+                                    <option value="cardinal">Kurve</option>
+                                    <option value="step">Stufen</option>
+                                    <option value="step-before">Stufen (vorher)</option>
+                                    <option value="step-after">Stufen (nachher)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group vis-option-group vis-option-type-checkbox hide-smart" id="vis-options-fill-between">
+                            
+                            
+                            <label class="checkbox" style="text-align:left;width:100%;position:relative;left:0" for="fill-between"><input type="checkbox" id="fill-between"> Bereich zwischen Linien füllen</label>
+                        </div>
+                        
+                        <div class="control-group vis-option-group vis-option-type-base-color hide-smart" id="vis-options-area-fill-color-between">
+                            
+                            
+                            <div id="area-fill-color-between">
+                                <div class="control-group">
+                                    <label class="control-label" for="select-color">Füllfarbe</label>
+                                    <div class="controls" style="max-width: 86.2934%;">
+                                        <div class="base-color-picker color-picker" style="background: rgb(204, 204, 204);">
+                                            <div class="arrow"></div>
+                                        </div>
+                                        <span class="custom-color-selector-head">
+                                            <a href="#" class="btn btn-small custom" role="button">customize colors...</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="custom-color-selector-body" style="display:none">
+                                    <div class="row">
+                                        <div class="span2" style="width:43%">
+                                            <h4>Select element(s):</h4>
+                                            <ul class="dataseries unstyled">
+                                                <li data-series="V"><div class="color">×</div><label>V</label></li><li data-series="S"><div class="color">×</div><label>S</label></li></ul>
+                                                <div style="font-size:12px;text-align:center;margin-bottom:10px;">
+                                                    Select: &nbsp;
+                                                    <a class="select-all">all</a> &nbsp;
+                                                    <a class="select-none" onclick="$('.dataseries li').removeClass('selected')">none</a> &nbsp;
+                                                    <a class="select-invert" onclick="$('.dataseries li').toggleClass('selected')">invert</a>
+                                                </div>
+                                            </div>
+                                            <div class="span2" style="width:42%;">
+                                                <h4>Choose a color:</h4>
+                                                <div class="info">
+                                                Please select an element on the left to change colors for individual elements...                        </div>
+                                                <div class="select" style="display:none">
+                                                    <div class="color-picker">
+                                                        <div class="arrow"></div>
+                                                    </div>
+                                                    <button class="btn reset-color">Reset</button>
+                                                </div>
+                                                <button style="margin-top:20px" class="btn reset-all-colors">Reset all colors</button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group vis-option-group vis-option-type-checkbox" id="vis-options-fill-below">
+                                
+                                
+                                <label class="checkbox" style="text-align:left;width:100%;position:relative;left:0" for="fill-below"><input type="checkbox" id="fill-below"> Bereich unterhalb der Linie füllen</label>
+                            </div>
+                            
+                            <div class="control-group vis-option-group vis-option-type-base-color" id="vis-options-area-fill-color-below">
+                                
+                                
+                                <div id="area-fill-color-below">
+                                    <div class="control-group">
+                                        <label class="control-label" for="select-color">Füllfarbe</label>
+                                        <div class="controls" style="max-width: 86.2934%;">
+                                            <div class="base-color-picker color-picker" style="background: rgb(204, 204, 204);">
+                                                <div class="arrow"></div>
+                                            </div>
+                                            <span class="custom-color-selector-head">
+                                                <a href="#" class="btn btn-small custom" role="button">customize colors...</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="custom-color-selector-body" style="display:none">
+                                        <div class="row">
+                                            <div class="span2" style="width:43%">
+                                                <h4>Select element(s):</h4>
+                                                <ul class="dataseries unstyled">
+                                                    <li data-series="V"><div class="color">×</div><label>V</label></li><li data-series="S"><div class="color">×</div><label>S</label></li></ul>
+                                                    <div style="font-size:12px;text-align:center;margin-bottom:10px;">
+                                                        Select: &nbsp;
+                                                        <a class="select-all">all</a> &nbsp;
+                                                        <a class="select-none" onclick="$('.dataseries li').removeClass('selected')">none</a> &nbsp;
+                                                        <a class="select-invert" onclick="$('.dataseries li').toggleClass('selected')">invert</a>
+                                                    </div>
+                                                </div>
+                                                <div class="span2" style="width:42%;">
+                                                    <h4>Choose a color:</h4>
+                                                    <div class="info">
+                                                    Please select an element on the left to change colors for individual elements...                        </div>
+                                                    <div class="select" style="display:none">
+                                                        <div class="color-picker">
+                                                            <div class="arrow"></div>
+                                                        </div>
+                                                        <button class="btn reset-color">Reset</button>
+                                                    </div>
+                                                    <button style="margin-top:20px" class="btn reset-all-colors">Reset all colors</button>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div id="vis-options-g-symbols" data-group-key="g-symbols" class="vis-option-type-group">
+                            <label class="group-title">
+                                <i class="fa fa-angle-double-right expand-group"></i>
+                                <i class="fa fa-angle-double-down collapse-group"></i>
+                                Symbole einstellen
+                            </label>
+                            <div class="option-group-content">
+                                <div class="control-group vis-option-group vis-option-type-checkbox" id="vis-options-line-symbols">
+                                    
+                                    
+                                    <label class="checkbox" style="text-align:left;width:100%;position:relative;left:0" for="line-symbols"><input type="checkbox" id="line-symbols"> Liniensymbole</label>
+                                </div>
+                                
+                                <div class="control-group vis-option-group vis-option-type-select hide-smart" id="vis-options-line-symbols-shape">
+                                    <a title="" class="vis-option-help" data-original-title="Wähle ein Symbol das auf den Linien angezeigt werden soll. Wähle &quot;verschiedene&quot; um unterschiedliche Symbole pro Linie zu benutzen."><span>?</span></a>
+                                    
+                                    
+                                    <label class="control-label" for="line-symbols-shape">Form</label>
+                                    <div class="controls" style="max-width: 59.8925%;">
+                                        <select id="line-symbols-shape" style="width:auto">
+                                            <option value="circle" selected="selected">Kreis</option>
+                                            <option value="square">Quadrat</option>
+                                            <option value="diamond">Raute</option>
+                                            <option value="triangle_up">Dreieck (n. oben)</option>
+                                            <option value="triangle_down">Dreieck (n. unten)</option>
+                                            <option value="multiple">verschiedene</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group vis-option-group vis-option-type-d3-lines-line-symbol hide-smart" id="vis-options-line-symbols-shape-multiple">
+                                    
+                                    
+                                    <label class="control-label" for="line-symbols-shape-multiple">wählen..</label>
+                                    <div class="controls form-inline d3-line-styles" style="max-width: 42.6882%;"><div class="d3-line-key"><div class="display symbol-0"></div><div class="key">V</div></div><div class="d3-line-key"><div class="display symbol-0"></div><div class="key">S</div></div></div>
+                                    <script type="text/javascript">
+                                    dw.backend.on('sync-option:d3-lines-line-symbol', function(args) {
+                                    require(['/static/plugins/d3-lines/line-style-options.js'], function(syncLineStyleOption) {
+                                    syncLineStyleOption('symbol', 6)(args);
+                                    });
+                                    });
+                                    </script>
+                                </div>
+                                
+                                <div class="control-group vis-option-group vis-option-type-radio hide-smart" id="vis-options-line-symbols-on">
+                                    <a title="" class="vis-option-help" data-original-title="Entscheide, auf welchem Datenpunkt die Symbole angezeigt werden."><span>?</span></a>
+                                    
+                                    
+                                    <label class="control-label" for="line-symbols-on">Wo?</label>
+                                    <div class="controls form-inline" style="max-width: 65.2688%;">
+                                        <label class="radio">
+                                            <input type="radio" name="line-symbols-on" value="first">&nbsp;erstem
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="line-symbols-on" value="last">&nbsp;letztem
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="line-symbols-on" value="both" checked="checked">&nbsp;beiden
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="line-symbols-on" value="every">&nbsp;jedem
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </fieldset>
+                    <div class="control-group vis-option-group vis-option-type-" id="vis-options-">
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>

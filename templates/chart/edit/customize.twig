@@ -1,0 +1,80 @@
+<h1>Step 3: Customize and annotate the chart</h1>
+
+<link rel="stylesheet" type="text/css" href="/static/plugins/options/options.css">
+<style type="text/css">
+.chart-preview {
+    position: relative;
+    border-radius: 2px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #eee;
+    margin: 0 auto 10px;
+    width: 600px;
+    height: 370px;
+}
+.chart-content {
+    width: 100%;
+    height: 100%;
+}
+.mobile-sizes {
+    position: absolute;
+    right: -80px;
+    width: 80px;
+    top: 40px;
+}
+.mobile-sizes .size {
+    font-family: quicksand;
+    display: block;
+    padding: 10px;
+    text-align: left;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+    margin-top: -1px;
+    opacity: 0.7;
+    background: linear-gradient(to right, rgba(247,247,247,1) 0%,rgba(255,255,255,1) 12%,rgba(255,255,255,1) 100%); 
+}
+
+.mobile-sizes .size.active {
+    font-weight: bold;
+    opacity: 1;
+}
+.chart-editor.dw-create-visualize .visconfig {
+    text-align: left;
+}
+.chart-editor.dw-create-visualize #vis-options .vis-option-type-group label.group-title, .chart-editor.dw-create-visualize .vis-options .vis-option-type-group label.group-title, .chart-editor.dw-create-visualize .visconfig label, .chart-editor.dw-create-visualize .visconfig select, .chart-editor.dw-create-visualize .visconfig input[type=text], .chart-editor.dw-create-visualize .visconfig textarea
+ {
+    font-family: quicksand;
+}
+label.group-title {
+    color: #888;
+    font-weight: bold!important;
+}
+
+.chart-editor.dw-create-visualize #vis-options .vis-option-type-group.group-open, .chart-editor.dw-create-visualize .vis-options .vis-option-type-group.group-open {
+    background: #f3f3f3;
+}
+</style>
+
+<div class="row chart-editor dw-create-visualize">
+    <div class="span4 visconfig">
+        {% include "chart/edit/customize-sample.twig" %}
+    </div>
+    <div class="span8">
+        <div class="chart-preview">
+            <div class="mobile-sizes">
+                <div class="size">Mobile (S)</div>
+                <div class="size">Mobile (L)</div>
+                <div class="size active">Desktop</div>
+            </div>
+            <div class="chart-content">
+                <iframe src="/chart/hl7AY/preview?innersvg=1&amp;random=70571" id="iframe-vis" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" oallowfullscreen="" msallowfullscreen="">
+                    </iframe>
+            </div>
+        </div>
+        <div class="resize-chart">
+            Größe ändern: <input id="resize-w" class="input-large" type="text" value=""> ×
+            <input id="resize-h" class="input-large" type="text" value="">
+        </div>
+    </div>
+</div>  

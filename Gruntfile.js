@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                     'font-awesome/css': 'font-awesome/css',
                     'font-awesome/fonts': 'font-awesome/fonts',
                     handsontable: 'handsontable/dist/*',
+                    'handsontable-new': 'handsontable-new/dist/*',
                     imagesloaded: 'imagesloaded/imagesloaded*.js',
                     jquery: 'jquery/dist/*',
                     'json-js': 'JSON-js/json2.js',
