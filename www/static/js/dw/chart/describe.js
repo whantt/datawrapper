@@ -1,5 +1,5 @@
 
-define(['handsontable', './describe/computed-columns'], function(handsontable) {
+define(['handsontable', './visualize/liveUpdate', './describe/computed-columns'], function(handsontable, liveUpdate) {
 
     var _chartLocale;
 
@@ -7,8 +7,14 @@ define(['handsontable', './describe/computed-columns'], function(handsontable) {
         date: 'fa fa-clock-o'
     };
 
-    function init(chartLocale) {
+    function init(chartLocale, mode) {
         _chartLocale = chartLocale; // store in upper scope
+        var isSidebar = mode == 'sidebar';
+
+        if (isSidebar) {
+
+        }
+
         var metadata = {
                 changes: {
                     exist: function() {
@@ -74,22 +80,25 @@ define(['handsontable', './describe/computed-columns'], function(handsontable) {
 
         chart.onChange(reload);
 
-        chart.sync('#describe-source-name', 'metadata.describe.source-name');
-        chart.sync('#describe-source-url', 'metadata.describe.source-url');
-        chart.sync('#transpose', 'metadata.data.transpose');
+        if (!isSidebar) {
+            chart.sync('#describe-source-name', 'metadata.describe.source-name');
+            chart.sync('#describe-source-url', 'metadata.describe.source-url');
+            chart.sync('#transpose', 'metadata.data.transpose');
 
-        chart.sync('#has-headers', 'metadata.data.horizontal-header');
+            chart.sync('#has-headers', 'metadata.data.horizontal-header');
 
-        $('#number-format').change(swapUnitAndCurrency);
-        swapUnitAndCurrency();
+            $('#number-format').change(swapUnitAndCurrency);
+            swapUnitAndCurrency();
 
-        updateCurrencyInNumberFormat();
-        $('#number-currency').change(updateCurrencyInNumberFormat);
+            updateCurrencyInNumberFormat();
+            $('#number-currency').change(updateCurrencyInNumberFormat);
 
-        // update data table after format changes
-        $('.number-format').change(function() {
-            updateTable(dataset, chart);
-        });
+            // update data table after format changes
+            $('.number-format').change(function() {
+                updateTable(dataset, chart);
+            });
+        }
+        
 
         $('#reset-data-changes').click(function(){
             console.log('revert');
@@ -334,6 +343,15 @@ define(['handsontable', './describe/computed-columns'], function(handsontable) {
             chart.load(dw.backend.__currentData).done(function(ds) {
                 dataset = ds;
                 updateTable();
+                if (isSidebar) {
+                    console.log('reload chart');
+                    var iframeWin = $('#iframe-vis').get(0).contentWindow;
+                    if (iframeWin.__dw && iframeWin.__dw.saved) {
+                        iframeWin.__dw.saved();
+                    }
+                    liveUpdate.update($('#iframe-vis'), chart.attributes());
+
+                }
             });
         }
 

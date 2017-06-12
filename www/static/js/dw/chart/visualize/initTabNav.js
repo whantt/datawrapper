@@ -3,6 +3,8 @@ define(function() {
 
     return function() {
 
+        return;
+
         $('.nav-tabs').each(function(i, el) {
             var navTabs = $(el);
             $('li a', navTabs).each(function(i, el) {

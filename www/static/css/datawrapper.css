@@ -1155,8 +1155,8 @@ html .btn-inverse {
 .chart-editor.dw-create-visualize #vis-options .vis-option-type-group.group-open,
 .chart-editor.dw-create-visualize .vis-options .vis-option-type-group.group-open {
   border-bottom: none;
-  margin-left: -10px;
-  margin-right: -10px;
+  margin-left: 0px;
+  margin-right: -20px;
   border-radius: 5px;
   background: #f9f9f9;
 }

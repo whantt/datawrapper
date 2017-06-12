@@ -2,7 +2,7 @@
 
 <div class="span4 visconfig">
 
-    <ul class="nav nav-tabs visualize-nav-tabs" data-target="tab-container">
+    {# <ul class="nav nav-tabs visualize-nav-tabs" data-target="tab-container">
         {% if type != "map" %}
             <li class="active"><a href="#vis" data-target="select-visualization">{% trans "Chart type" %}</a></li>
         {% endif %}
@@ -10,16 +10,28 @@
         <li class="{% if type == "map" %}active{% endif %}"><a href="#refine" data-target="refine-the-chart">{% trans "Refine" %}</a></li>
         <li ><a href="#story" data-target="annotate">{% trans "Annotate" %}</a></li>
         <li ><a href="#design" data-target="design">{% trans "Design" %}</a></li>
-    </ul>
+    </ul> #}
 
     <div class="" style="padding-top: 20px">
 
         <div class="tab-container">
 
+            <div class="section annotate">
+                <h3>{% trans "Edit chart data" %}</h3>
+
+                <div class="story">
+                    <div class="vis-options form-horizontal vis-options-annotate">
+                        {% include "chart/visualize/edit-data.twig" %}
+                    </div>
+
+                </div>
+
+            </div>
+
             {% if type != "map" %}
             <div class="section select-visualization">
                 <div class="vis-selector-unfolded">
-                {# <h3>{% trans "Select visualization" %}</h3> #}
+                <h3>{% trans "Select visualization" %}</h3>
                     <div class="vis-thumbs">
                         {% for vis in visualizations %}{% if vis.namespace != 'map' and vis.id not in config.vis_archive %}{% if vis.title %}
                         <div class="vis-thumb{% if vis.id == chart.type %} active{% endif %}" data-id="{{ vis.id }}" data-title="{{ vis.title }}" data-static-path="{{ vis.__static_path }}">
@@ -51,25 +63,10 @@
             </div>
             {% endif %}
 
-            <div class="section annotate">
-                {# <h3>{% trans "Tell the story" %}</h3> #}
-
-                <div class="story">
-                    <div class="vis-options form-horizontal vis-options-annotate">
-                        {% include "chart/visualize/annotate.twig" %}
-                    </div>
-
-
-                    
-
-                </div>
-
-            </div>
-
             {# visualization specific options #}
 
             <div class="section refine-the-chart">
-                {# <h3>{% trans "Refine the chart" %}</h3> #}
+                <h3>{% trans "Customize visualization" %}</h3>
 
                 <div class="form-horizontal vis-options vis-options-refine">
 
@@ -78,7 +75,24 @@
                 </div>
             </div>
 
+
+            <div class="section annotate">
+                <h3>{% trans "Annotate the chart" %}</h3>
+
+                <div class="story">
+                    <div class="vis-options form-horizontal vis-options-annotate">
+                        {% include "chart/visualize/annotate.twig" %}
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
             <div class="section design">
+
+                <h3>{% trans "Select chart layout" %}</h3>
 
                 {{ hook('visualize_before_theme_selector') }}
 
