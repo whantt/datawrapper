@@ -144,8 +144,22 @@
                                 <textarea>{{ embedCode }}</textarea>
                             </div>
                             <script type="text/javascript">
-                                $('a[href=#embed], .embed-code .close').click(function() { $('.embed-code').toggleClass('hide'); });
-                                $('.embed-code textarea').click(function() { $(this).focus().select(); });
+                                (function() {
+                                    var embed = document.querySelector('.embed-code');
+                                    function toggleEmbed(event) {
+                                        event.preventDefault();
+                                        embed.classList.toggle('hide');
+                                    }
+                                    document.querySelector('a[href="#embed"]')
+                                        .addEventListener('click', toggleEmbed);
+                                    document.querySelector('.embed-code .close')
+                                        .addEventListener('click', toggleEmbed);
+                                    document.querySelector('.embed-code textarea')
+                                        .addEventListener('click', function(event) {
+                                            event.target.focus();
+                                            event.target.select();
+                                        })
+                                })();
                             </script>
                         {% endif %}
 
@@ -186,12 +200,12 @@
 
     <script type="text/javascript" charset="utf-8">
 
-    if (document.getElementsByTagName('script').length > 0) $('body').addClass('js');
+    if (document.getElementsByTagName('script').length > 0) document.body.classList.add('js');
 
     var visJSON = {{ visualization | json | raw }};
 
 
-    __dw.init($.extend({
+    __dw.init(_.extend({
         chartJSON: {{ chart.toStruct(true) | json | raw }},
         preview: {{ preview ? 'true' : 'false' }},
         chartLocale: '{{ chartLocale }}',
@@ -208,20 +222,29 @@
     }
 
     if (visJSON.height == "fixed") {
-        setInterval(function() {
-            var desiredHeight = $('html').outerHeight(true);
-            window.parent.postMessage({
-                'datawrapper-height': {
-                    '{{ chart.id }}': desiredHeight
-                }
-            }, "*");
+        (function() {
+            function outerHeight(el) {
+                var height = el.offsetHeight;
+                var style = getComputedStyle(el);
+                height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+                return height;
+            }
 
-            window.parent.postMessage({
-                sentinel: 'amp',
-                type: 'embed-size',
-                height: desiredHeight
-            }, '*');
-        }, 1000);
+            setInterval(function() {
+                var desiredHeight = outerHeight(document.body);
+                window.parent.postMessage({
+                    'datawrapper-height': {
+                        '{{ chart.id }}': desiredHeight
+                    }
+                }, "*");
+
+                window.parent.postMessage({
+                    sentinel: 'amp',
+                    type: 'embed-size',
+                    height: desiredHeight
+                }, '*');
+            }, 1000);
+        })();
     }
 
     {% if theme.getThemeData('template.js') %}
