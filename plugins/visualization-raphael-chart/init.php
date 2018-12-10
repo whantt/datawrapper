@@ -23,6 +23,18 @@ DatawrapperVisualization::register($plugin, array(
             "cdn" => !empty($asset_domain)
                 ? $asset_url . "vendor/raphael-js/2.1.2/raphael-min.js"
                 : null
+        ),
+        array(
+                "local" => "vendor/chroma.min.js",
+                "cdn" => null
+        ),
+        array(
+                "local" => "vendor/d3-color.min.js",
+                "cdn" => null
+        ),
+        array(
+                "local" => "vendor/d3-interpolate.min.js",
+                "cdn" => null
         )
     )
 ));

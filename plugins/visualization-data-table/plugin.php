@@ -13,10 +13,16 @@ class DatawrapperPlugin_VisualizationDataTable extends DatawrapperPlugin_Visuali
             "order"      => 71,
             "less" => dirname(__FILE__ ) . "/static/data-table.less",
             "height"     => "fixed",
-            "libraries"  => array(array(
-                "local" => "vendor/jquery.dataTables.min.js",
-                "cdn" => "//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"
-            )),
+            "libraries"  => array(
+                array(
+                    "local" => "vendor/jquery.dataTables.min.js",
+                    "cdn" => "//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"
+                ),
+                array(
+                    "local" => "vendor/chroma.min.js",
+                    "cdn" => null
+            )
+            ),
             "options"    => $this->getOptions(),
             "locale"    => $translated,
         );

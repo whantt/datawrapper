@@ -350,16 +350,21 @@
         font-size: 12px;
 
         span {
-            color: #333;
-            text-shadow: 0 0 2px #fff;
+            {# color: #333; #}
+            {# text-shadow: 0 0 2px #fff; #}
         }
 
         &.inverted span {
             text-shadow: 0 0px 2px #000000;
             color: #fff;
         }
+        
+        &.inside:not(.inverted) span {
+            text-shadow: 0 0px 2px #ffffff;
+            color: #333;
+        }
 
-        &.outline span {
+{#         &.outline span {
             text-shadow: 0 1px 0 #FFFFFF, 1px 0 0 #FFFFFF, 0 -1px 0 #FFFFFF, -1px 0 0 #FFFFFF,
             1px 1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF,
             0 2px 1px #FFFFFF, 2px 0 1px #FFFFFF, 0 -2px 1px #FFFFFF, -2px 0 1px #FFFFFF,
@@ -369,7 +374,7 @@
             sup {
                 text-shadow: none;
             }
-        }
+        } #}
 
         &.highlighted {
             font-weight: bold;

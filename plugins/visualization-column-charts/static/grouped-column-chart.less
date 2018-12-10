@@ -4,3 +4,11 @@
 .chart.vis-grouped-column-chart .legend .label {
     white-space: nowrap;
 }
+
+.chart.vis-grouped-column-chart .dw-chart-body.hovered rect:not(.hover) {
+	opacity:0.4;
+}
+
+.chart.vis-grouped-column-chart .dw-chart-body rect {
+	transition: opacity .1s ease-in-out;
+}

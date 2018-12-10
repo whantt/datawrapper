@@ -1,7 +1,7 @@
 
 (function(){
 
-
+ 
     dw.visualization.register('pie-chart', 'raphael-chart', {
 
         isDonut: function() {
@@ -232,7 +232,6 @@
             var cm = me.colorMap();  
 
             _.each(slices, function(o, index) {
-
                 var da = o.value / total * FA,
                     stroke = chroma.color(fill).darken(15).hex(),
                     a0 = reverse ? sa - da : sa,
@@ -254,8 +253,9 @@
                     lblcl += ' label-group';
                     if (me.invertLabel(fill)) lblcl += ' inverted';
                     if (lblOutside(o) && c.outside_labels) lblcl += ' outside';
+                    if (!lblOutside(o)) lblcl += ' inside';
 
-                    var labelHtml = '<span class="' + (o.name != o.label ? 'dw-circle' : '') + '"><b class="label-inner">'+o.label+'</b></span><span class="label-inner">'+value+'</span>';
+                    var labelHtml = '<span class="' + (o.name != o.label ? 'dw-circle' : '') + '"><b class="label-inner bold-text">'+o.label+'</b></span><span class="label-inner">'+value+'</span>';
                     var lbl = me.registerLabel(me.label(0, 0, labelHtml, {
                         w: 80, cl: lblcl, align: 'center', valign: 'middle'
                     }), o.name);
@@ -275,6 +275,7 @@
                     slice = me.__slices[o.name];
                     slice.label.text('<b class="label-inner">'+o.label+'</b><span class="label-inner">'+value+'</span>');
                     slice.label[lblOutside(o) && c.outside_labels ? 'addClass' : 'removeClass']('outside');
+                    slice.label[lblOutside(o) && c.outside_labels ? 'removeClass' : 'addClass']('inside');
                     slice.label[o.name != o.label ? 'addClass' : 'removeClass']('dw-circle');
                     slice.animate(cx, c.cy - or_pad*0.5, c.or  - or_pad, c.ir, a0, a1, me.theme().duration, me.theme().easing, o.value > 0 ? 1 : 0.5);
                 }
@@ -290,7 +291,7 @@
                         out_lbl;
 
                     out_lbl = me.registerLabel(me.label(lx, ly, o.name, {
-                        cl: 'series out',
+                        cl: 'series out bold-text',
                         w: out_label_w
                     }), o.name);
 
@@ -329,9 +330,12 @@
                     }
                     me.registerElement(line, lbl.data('key'));
 
-                    line[0].setAttribute('class','connected-line');
-                    line.attr('opacity', 0);                    
+                    line[0].setAttribute('class','connected-line connecting-line');
+                    line.attr('opacity', 0);
+                    var fallback = chroma.contrast(me.theme().colors.background,'#000000') < 4.5 ? '#ffffff' : '#000000';
+                    line.attr("stroke",cm(me.theme().colors.axis || fallback));                    
                     lbl.el.data('line', line);
+                    // lbl.el.style("color",me.theme().text ? "#333");
 
                     setTimeout(function() {
                         lbl.el.animate({ opacity: 1 }, 200);
@@ -421,7 +425,9 @@
                     if (!lbl) return;
                     if (hovered_key !== undefined && key == hovered_key) {
                         lbl.addClass('hover');
+                        if(lbl.el[0].children[0].childElementCount ==2) lbl.el[0].children[0].lastChild.classList.add("bold-text");
                     } else {
+                        if(lbl.el[0].children[0].childElementCount == 2) lbl.el[0].children[0].lastChild.classList.remove("bold-text");
                         lbl.removeClass('hover');
                     }
                 });

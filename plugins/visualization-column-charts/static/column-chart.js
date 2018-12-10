@@ -56,6 +56,8 @@
 
             me.renderChart(el, c);
             
+            me.fixColors(me.theme(),me.colorMap());
+
             me.renderingComplete();
         },
 
@@ -93,7 +95,7 @@
                 mm_r = mm[0] >= 0 ? 1 : mm[1] <= 0 ? 0 : mm[1] / (mm[1] - mm[0]),
                 maxLabelHeight = 0,
                 labelSpace = me.barLabelWidth(),                
-                labelClass = 'label series x-tick-values chart-text' + (me.useSmallerLabels() ? " smaller" : "");
+                labelClass = 'label series x-tick-values column-label chart-text' + (me.useSmallerLabels() ? " smaller" : "");
 
             if (me.rotateLabels()) {                
                 maxLabelHeight = Math.min(d3.max(bars, function(d) {
@@ -174,7 +176,7 @@
                 f_val  = formatter(val, true),
                 vlbl_w = me.labelWidth(f_val, 'value'),
                 bw     = (d.width + d.width * d.pad),
-                lblcl  = ['series x-tick-values chart-text'],
+                lblcl  = ['series x-tick-values column-label chart-text'],
                 lbl_w  = c.w / (n+2),
                 valign = val > 0 ? 'top' : 'bottom',
                 halign = 'center',
@@ -191,7 +193,9 @@
                 me.registerLabel(me.label(lpos.left, lpos.top, formatter(barv.value, true),{
                     w: lpos.width,
                     align: 'center',
-                    cl: 'value outline direct-value-label chart-text' + (valueLabels == "hover" ? ' only-on-hover' : "")
+                    cl: 'value outline direct-value-label chart-text' + (valueLabels == "hover" ? ' only-on-hover' : ""),
+                    css: {
+                        "text-shadow": "0 0 2px " + theme.colors.background                    }
                 }), barv.name);
             }
 
@@ -504,7 +508,7 @@
                 lbl_w = me.barLabelWidth();
 
                 if (me.rotateLabels()) {
-                    var height = me.labelHeight(txt, "label series x-tick-values chart-text" + (me.useSmallerLabels() ? " smaller" : ""), 100);                    
+                    var height = me.labelHeight(txt, "label series x-tick-values column-label chart-text" + (me.useSmallerLabels() ? " smaller" : ""), 100);                    
 
                     lbl_y -= 10;  // move towards zero axis
                     lbl_w = 100;
@@ -674,9 +678,9 @@
             _.each(barvalues, function(bar) {
                 _.each(me.__labels[bar.name], function(lbl) {
                     if (hover_key !== undefined && bar.name == hover_key) {
-                        lbl.addClass('hover');                        
+                        lbl.addClass('hover').addClass('bold-text');                        
                     } else {
-                        lbl.removeClass('hover');                        
+                        lbl.removeClass('hover').removeClass('bold-text');                        
                     }
                 });
                 _.each(me.__elements[bar.name], function(el) {
@@ -690,6 +694,65 @@
 
         unhoverSeries: function() {
             this.hoverSeries();
+        },
+
+        fixColors: function(theme,cm) {
+            var me = this;
+
+            var gridLineColor = me.setColor(theme,cm,"gridline"),
+                xTicksColor = me.setColor(theme,cm,"tickTextHC"),
+                tickText = me.setColor(theme,cm,"tickText"),
+                valueLabelColor = me.setColor(theme,cm,"label"),
+                textColor = me.setColor(theme,cm,"label"),
+                axisColor = me.setColor(theme,cm,"axis");
+
+            // Legend Text
+            $('.legend-text span').css("color",textColor);
+            // Value Labels
+            $('.value.label:not(.inside)').css("color",valueLabelColor);
+            // X axis values
+            $('.series.label').css("color",textColor);
+            // Direct key
+            $('.direct-label.label').css("color",textColor);
+            // Y Axis Values
+            $('.axis.label span').css("color",tickText);
+            // Gridlines
+            $('.y-gridline').css("stroke",gridLineColor);
+            // Baseline
+            $('.x-axis').css("stroke",axisColor);
+            // Direct key connecting line
+            $('.connecting-line').css("stroke",axisColor);
+        },
+
+        setColor: function(theme,cm,element) {
+            var me = this;
+            var cm = this.colorMap();
+    var fallback = chroma.contrast(theme.colors.background,'#000000') < 4.5 ? '#ffffff' : '#333333',
+        // textFallback = theme.colors.text || theme.typography.chart.color || fallback;
+        darkBG = chroma(theme.colors.background).luminance() < 0.5 ? true : false;
+
+        switch(element) {
+            case "gridline":
+                return cm(d3.interpolateRgb(theme.colors.axis || fallback, theme.colors.background)(darkBG == true ? 0.9 : 0.2));
+                break;
+
+            case "tickText":
+                return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(darkBG == true ? 0.6 : 0.7));
+                break;
+            //High Contrast Tick text - for example in line/area charts the x-axis tick labels are higher
+            //contrast than those on the y-axis (e.g on a white backbground the x-axis tick text is black and the y-axis is grey )
+            case "tickTextHC":
+                return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(0.2));
+                break;
+
+            case "axis":
+                return cm(theme.colors.axis || fallback);
+                break;
+
+            case "label":
+                return cm(theme.colors.text || fallback);
+                break;
+        }
         },
 
         gridVisible: function() {

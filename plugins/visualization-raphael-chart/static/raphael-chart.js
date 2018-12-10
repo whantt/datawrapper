@@ -188,6 +188,7 @@
          */
         label: function(x, y, txt, _attrs) {
             var me = this,
+                fallback = chroma.contrast(me.theme().colors.background,'#000000') < 4.5 ? '#ffffff' : '#333333',
                 rot_w = Math.max(_attrs.w || 0, 100),
                 lbl,  // $(<div class="label" />)
                 attrs = {  // default attributes
@@ -198,7 +199,8 @@
                     rotate: 0,
                     css: {
                         position: 'absolute',
-                        width: _attrs.w ? _attrs.w : 'auto'
+                        width: _attrs.w ? _attrs.w : 'auto',
+                        color:me.theme().colors.text || fallback
                     },
                     x: x,
                     y: y,
@@ -506,7 +508,9 @@
 
                 if (key && !me.chart().isHighlighted(key)) {
                     if (!colorCache[color+'-hl']) {
-                        colorCache[color+'-hl'] = chroma.interpolate(key_color, bg_color, bg_lch[0] < 60 ? 0.7 : 0.63);
+                        // colorCache[color+'-hl'] = chroma.interpolate(key_color, bg_color, bg_lch[0] < 60 ? 0.7 : 0.63);
+                        var rgb = chroma(color).rgb();
+                        colorCache[color+'-hl'] = "rgba("+rgb[0]+','+rgb[1]+','+rgb[2]+','+0.4+")";
                     }
                     return colorCache[color+'-hl'];
                 }
@@ -549,7 +553,7 @@
                 ticks.unshift(domain[0]);
                 ticks.push(domain[1]);
             }
-            return ticks;
+            return ticks; 
         },
 
         /**
@@ -561,9 +565,10 @@
         invertLabel: function(col) {
             var c = chroma.color(col),
                 bg = chroma.color(this.theme().colors.background);
-            return bg.lab()[0] > 60 ?  // check if background is whitish
-                c.lab()[0] < 70 :  //
-                c.lab()[0] > 60;
+            // return bg.lab()[0] > 60 ?  // check if background is whitish
+            //     c.lab()[0] < 70 :  //
+            //     c.lab()[0] > 60;
+                return c.lab()[0] < 70
         },
 
         /**

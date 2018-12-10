@@ -1,13 +1,15 @@
 
 (function(){
-
     dw.visualization.register('grouped-column-chart', 'column-chart', {
         _showValueLabels: function() { return true; },
 
         _isStacked: function() { return false; },
 
+        _isGrouped: function() { return true; },
+
         render: function(el) {            
-            var me = this;
+            var me = this,
+                theme = me.theme();
 
             me.checkDataset(el);
             if (!me.axesDef) return;
@@ -18,7 +20,8 @@
             c.bpad = 10
             
             me.init();
-            me.renderChart(el, c);                
+            me.renderChart(el, c); 
+            me.fixColors(theme);               
             me.renderingComplete();
         },
 
@@ -35,7 +38,7 @@
                 barColumns = me.getBarColumns(), 
                 all_values_negative = true;               
             
-            if (me.useDirectLabeling()) {
+            if (me.useDirectLabeling()) { 
                 var mobile = me.get('same-as-desktop', true) ? "" : (c.w > 420 ? '' : '-mobile'),
                     labelSpace = me.get('label-space'+mobile)/100;
 
@@ -189,6 +192,7 @@
             var me = this,
                 c = me.__canvas,
                 n = me.axesDef.columns.length,
+                theme = me.theme(),
                 columns = me.getBarColumns(me.get('sort-values'), me.get('reverse-order')),
                 lblFmt = me.chart().columnFormatter(me.axes(true).labels);
 
@@ -225,17 +229,23 @@
 
                     if (valueLabels != "hide") {
                         me.__barLbls[key] = me.__barLbls[key] || me.registerLabel(me.label(0,0,'X', {
-                                align: 'center', cl: 'value direct-value-label chart-text'+(d.h > 30 || me._isStacked() ? ' inside' : '') }), column.name());
+                                valign: me._isStacked() ? 'middle' : 'bottom',
+                                align: 'center',
+                                cl: 'value direct-value-label chart-text'+ (me._isStacked() ? ' inside' : ''), 
+                                css: me._isStacked() ? "" : {
+                                    "text-shadow": "0 0 2px " + theme.colors.background
+                                }
+
+                            }), column.name());
                         // console.log('xxx', column.name(), r, d.y, d.h, 'y:', +d.y + (column.val(r) >= 0 ? +(d.h > 30 ? d.h - 12 : -12) : +(d.h > 30 ? 12 : d.h + 12) ))
                         me.__barLbls[key].animate({
                             x: d.x + d.w * 0.5,
                             y: me._isStacked() ?
                                 d.y + d.h * 0.5 :
-                                +d.y + (column.val(r) >= 0 ? +(d.h > 30 ? 12 : -12) : +(d.h > 30 ? d.h- 12 : d.h + 12) ), // < 0
+                                + d.y + (column.val(r) >= 0 ? -4 : + (d.h > 30 ? d.h- 12 : d.h + 12) ), // < 0
                             txt: me.formatValue(column.val(r), true)
                         }, 0, 'expoInOut');
                         me.__barLbls[key].data('row', r);
-
                         if (!valueLabels || valueLabels == "hover" || valueLabels == "auto") {
                             me.__barLbls[key].hide();
                         } else if (valueLabels == "always") {
@@ -311,14 +321,13 @@
                                 w: c.rpad-20,
                                 align: 'left',
                                 valign: 'middle',
-                                cl: '',
+                                cl: 'direct-label',
                                 rotate: 0
                             },
                             sl2_key = 'row-'+r,
                             sl2 = me.__row_labels[sl2_key] = me.__row_labels[sl2_key] ||
                                 me.registerLabel(me.label(rl.x, rl.y, lblFmt(me.axes(true).labels.val(r)), rl), sl2_key);
                             sl2.__attrs = rl;
-
                         directLbls.push(sl2);
                     }
 
@@ -336,8 +345,11 @@
 
                 _.each(me.__labels[column.name()], function(lbl) {
                     if (lbl.hasClass('value')) {
-                        fill = getFill(column, lbl);
-                        if (lbl.hasClass('inside') && chroma(fill).lab()[0] < 70) { lbl.addClass('inverted'); }
+                        if (me._isStacked() ==  false) fill = getFill(column, lbl);
+                        else {
+                            fill = getFill(column, lbl);
+                            if (lbl.hasClass('inside') && chroma(fill).lab()[0] < 70) { lbl.addClass('inverted'); }
+                        }
                     }
                 });
             });
@@ -350,7 +362,7 @@
                 var path = 'M'+(last_bar.x + last_bar.w)+','+lbl.__attrs.oy+'L'+(lbl.__attrs.x-3)+','+lbl.__attrs.y;
 
                 if (me.__row_label_lines[r]) me.__row_label_lines[r].animate({path: path}, me.theme().duration, me.theme().easing);
-                else me.__row_label_lines[r] = c.paper.path(path).attr(me.theme().yAxis).attr({ opacity: 0.5 });
+                else me.__row_label_lines[r] = c.paper.path(path).attr(me.theme().yAxis).attr({ opacity: 0.5}).attr({stroke: theme.colors.axis}).node.classList.add("connecting-line");;
 
                 lbl.animate(lbl.__attrs, 0, me.theme().easing);
             });
@@ -417,7 +429,8 @@
          * highlights hovered bars and displays value labels
          */
         hover: function(hoveredSeries, row) {
-            var me = this;
+            var me = this,
+             cm = this.colorMap();
 
             // highlight legend element
             $('.dw-chart .legend > div').removeClass('hover');
@@ -428,6 +441,12 @@
             // show/hide the labels that show values on top of the bars            
             _.each(me.__barLbls, function(lbl, key) {
                 var valueLabels = me.get('value-labels');
+                    if (hoveredSeries && lbl.data('row') == row && hoveredSeries == lbl.data('key')) {
+                        lbl.addClass('hover');                        
+                    } else {
+                        lbl.removeClass('hover');
+                    }
+
                 if (!valueLabels || valueLabels == "hover" || valueLabels == "auto") {
                     if (hoveredSeries && lbl.data('row') == row && hoveredSeries == lbl.data('key')) {
                         lbl.show();                        
@@ -435,7 +454,18 @@
                         lbl.hide();
                     }
                 }
-            });             
+            });
+
+            _.each(me.__bars, function(bar, series) {
+                series = series.split("-");
+
+                    if (hoveredSeries && hoveredSeries == series[0] && row.toString() == series[1]) {
+                        $('.dw-chart-body').addClass("hovered");
+                        bar.node.classList.add("hover");
+                    }
+                    else bar.node.classList.remove('hover');
+                    if (!hoveredSeries) $('.dw-chart-body').removeClass("hovered");
+                });           
         },
 
         unhoverSeries: function() {
