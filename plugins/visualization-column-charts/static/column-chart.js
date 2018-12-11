@@ -31,7 +31,6 @@
                 filter = dw.utils.filter(dw.utils.columnNameColumn(barColumns), 0),
                 filterUI = filter.ui(me),
                 filterH = 0;
-
             me.checkDataset(el);
             if (!me.axesDef) return;
                                
@@ -731,28 +730,28 @@
         // textFallback = theme.colors.text || theme.typography.chart.color || fallback;
         darkBG = chroma(theme.colors.background).luminance() < 0.5 ? true : false;
 
-        switch(element) {
-            case "gridline":
-                return cm(d3.interpolateRgb(theme.colors.axis || fallback, theme.colors.background)(darkBG == true ? 0.9 : 0.2));
-                break;
+    switch(element) {
+        case "gridline":
+            return cm(d3.interpolateRgb(theme.colors.axis || fallback, theme.colors.background)(0.9));
+            break;
 
-            case "tickText":
-                return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(darkBG == true ? 0.6 : 0.7));
-                break;
-            //High Contrast Tick text - for example in line/area charts the x-axis tick labels are higher
-            //contrast than those on the y-axis (e.g on a white backbground the x-axis tick text is black and the y-axis is grey )
-            case "tickTextHC":
-                return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(0.2));
-                break;
+        case "tickText":
+            return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(darkBG == true ? 0.6 : 0.7));
+            break;
+        //High Contrast Tick text - for example in line/area charts the x-axis tick labels are higher
+        //contrast than those on the y-axis (e.g on a white backbground the x-axis tick text is black and the y-axis is grey )
+        case "tickTextHC":
+            return cm(d3.interpolateRgb(theme.colors.text || fallback, theme.colors.background)(0.2));
+            break;
 
-            case "axis":
-                return cm(theme.colors.axis || fallback);
-                break;
+        case "axis":
+            return cm(theme.colors.axis || fallback);
+            break;
 
-            case "label":
-                return cm(theme.colors.text || fallback);
-                break;
-        }
+        case "label":
+            return cm(theme.colors.text || fallback);
+            break;
+    }
         },
 
         gridVisible: function() {

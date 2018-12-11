@@ -16,7 +16,7 @@ dw.theme.base = {
         negative: '#E31A1C',
         // colors background and text needs to be set in CSS as well!
         background: '#ffffff',
-        text: '#000000',
+        text: '#333333',
 
         /*
          * gradients that might be used by color gradient selectors
