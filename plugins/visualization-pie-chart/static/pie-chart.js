@@ -334,8 +334,7 @@
                     line.attr('opacity', 0);
                     var fallback = chroma.contrast(me.theme().colors.background,'#000000') < 4.5 ? '#ffffff' : '#000000';
                     line.attr("stroke",cm(me.theme().colors.axis || fallback));                    
-                    lbl.el.data('line', line);
-                    // lbl.el.style("color",me.theme().text ? "#333");
+                    lbl.el.data('line', line);                    
 
                     setTimeout(function() {
                         lbl.el.animate({ opacity: 1 }, 200);

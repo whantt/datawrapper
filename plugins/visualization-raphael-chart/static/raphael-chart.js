@@ -200,7 +200,7 @@
                     css: {
                         position: 'absolute',
                         width: _attrs.w ? _attrs.w : 'auto',
-                        color:me.theme().colors.text || fallback
+                        color: me.theme().colors.text || fallback
                     },
                     x: x,
                     y: y,
@@ -507,8 +507,7 @@
                     bg_lch = bg_color.lch();
 
                 if (key && !me.chart().isHighlighted(key)) {
-                    if (!colorCache[color+'-hl']) {
-                        // colorCache[color+'-hl'] = chroma.interpolate(key_color, bg_color, bg_lch[0] < 60 ? 0.7 : 0.63);
+                    if (!colorCache[color+'-hl']) {                        
                         var rgb = chroma(color).rgb();
                         colorCache[color+'-hl'] = "rgba("+rgb[0]+','+rgb[1]+','+rgb[2]+','+0.4+")";
                     }
@@ -562,13 +561,8 @@
          *
          * returns true if a label needs to be inverted
          */
-        invertLabel: function(col) {
-            var c = chroma.color(col),
-                bg = chroma.color(this.theme().colors.background);
-            // return bg.lab()[0] > 60 ?  // check if background is whitish
-            //     c.lab()[0] < 70 :  //
-            //     c.lab()[0] > 60;
-                return c.lab()[0] < 70
+        invertLabel: function(col) {        
+            return chroma.color(col).lab()[0] < 70;
         },
 
         /**

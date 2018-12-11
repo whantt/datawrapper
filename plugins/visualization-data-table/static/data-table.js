@@ -81,9 +81,11 @@
 
                    tr.css('border-top', '1px solid #bbb');
                 }
-                if (r%2 != 0) tr.css('background',chroma(me.theme().colors.background).luminance() < 0.5 ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)');
-                // if (tr.hasClass("odd")) {console.log("ya");}
-                // console.log(me.theme().colors.background)
+                
+                if (r%2 != 0) {
+                    tr.css('background', chroma(me.theme().colors.background).luminance() < 0.5 ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)');
+                }
+                
                 dataset.eachColumn(function(column, s) {
                     var cell_content = me.chart().columnFormatter(column)(column.val(r), true);
                     if (cell_content == "n/a") {
@@ -198,8 +200,9 @@
             } else if (typeof c == "string") {
                 c = c;
             }
-            var headText = chroma.contrast(c,"#ffffff") < 1.8 ? "#000" : "#fff";
-            var css = '{font-weight:bold; background: '+c+'!important; color: '+headText+'!important; border-color: '+c+'!important; }';
+            var headText = chroma.contrast(c,"#ffffff") < 1.8 ? "#000" : "#fff",
+                css = '{font-weight:bold; background: '+c+'!important; color: '+headText+'!important; border-color: '+c+'!important; }';
+                
             $('<style>.dw-chart-body table th '+css+'</style>').appendTo(el);
             $('<style type="text/css">.dw-chart-body.mobile-view table.responsive tr td:first-child '+css+'</style>').appendTo(el);
             // $('.chart.vis-data-table .datatable-default th').css('background', c);

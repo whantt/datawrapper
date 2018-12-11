@@ -194,7 +194,8 @@
                     align: 'center',
                     cl: 'value outline direct-value-label chart-text' + (valueLabels == "hover" ? ' only-on-hover' : ""),
                     css: {
-                        "text-shadow": "0 0 2px " + theme.colors.background                    }
+                        "text-shadow": "0 0 2px " + theme.colors.background
+                    }
                 }), barv.name);
             }
 
@@ -507,8 +508,7 @@
                 lbl_w = me.barLabelWidth();
 
                 if (me.rotateLabels()) {
-                    var height = me.labelHeight(txt, "label series x-tick-values column-label chart-text" + (me.useSmallerLabels() ? " smaller" : ""), 100);                    
-
+                    var height = me.labelHeight(txt, "label series x-tick-values column-label chart-text" + (me.useSmallerLabels() ? " smaller" : ""), 100);
                     lbl_y -= 10;  // move towards zero axis
                     lbl_w = 100;
                     

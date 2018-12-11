@@ -5,8 +5,6 @@
 
         _isStacked: function() { return false; },
 
-        _isGrouped: function() { return true; },
-
         render: function(el) {            
             var me = this,
                 theme = me.theme();
@@ -38,7 +36,7 @@
                 barColumns = me.getBarColumns(), 
                 all_values_negative = true;               
             
-            if (me.useDirectLabeling()) { 
+            if (me.useDirectLabeling()) {
                 var mobile = me.get('same-as-desktop', true) ? "" : (c.w > 420 ? '' : '-mobile'),
                     labelSpace = me.get('label-space'+mobile)/100;
 
@@ -235,9 +233,8 @@
                                 css: me._isStacked() ? "" : {
                                     "text-shadow": "0 0 2px " + theme.colors.background
                                 }
-
                             }), column.name());
-                        // console.log('xxx', column.name(), r, d.y, d.h, 'y:', +d.y + (column.val(r) >= 0 ? +(d.h > 30 ? d.h - 12 : -12) : +(d.h > 30 ? 12 : d.h + 12) ))
+                        
                         me.__barLbls[key].animate({
                             x: d.x + d.w * 0.5,
                             y: me._isStacked() ?
@@ -345,8 +342,9 @@
 
                 _.each(me.__labels[column.name()], function(lbl) {
                     if (lbl.hasClass('value')) {
-                        if (me._isStacked() ==  false) fill = getFill(column, lbl);
-                        else {
+                        if (me._isStacked() ==  false) {
+                            fill = getFill(column, lbl);
+                        } else {
                             fill = getFill(column, lbl);
                             if (lbl.hasClass('inside') && chroma(fill).lab()[0] < 70) { lbl.addClass('inverted'); }
                         }
@@ -361,8 +359,18 @@
 
                 var path = 'M'+(last_bar.x + last_bar.w)+','+lbl.__attrs.oy+'L'+(lbl.__attrs.x-3)+','+lbl.__attrs.y;
 
-                if (me.__row_label_lines[r]) me.__row_label_lines[r].animate({path: path}, me.theme().duration, me.theme().easing);
-                else me.__row_label_lines[r] = c.paper.path(path).attr(me.theme().yAxis).attr({ opacity: 0.5}).attr({stroke: theme.colors.axis}).node.classList.add("connecting-line");;
+                if (me.__row_label_lines[r]) {
+                    me.__row_label_lines[r].animate({path: path}, me.theme().duration, me.theme().easing);
+                } else {
+                    me.__row_label_lines[r] = c.paper.path(path)
+                        .attr(me.theme().yAxis)
+                        .attr({ 
+                            opacity: 0.5,
+                            stroke: theme.colors.axis
+                        });
+
+                    $(me.__row_label_lines[r].node).addClass("connecting-line");
+                } 
 
                 lbl.animate(lbl.__attrs, 0, me.theme().easing);
             });
@@ -430,7 +438,7 @@
          */
         hover: function(hoveredSeries, row) {
             var me = this,
-             cm = this.colorMap();
+                cm = this.colorMap();
 
             // highlight legend element
             $('.dw-chart .legend > div').removeClass('hover');
@@ -459,13 +467,15 @@
             _.each(me.__bars, function(bar, series) {
                 series = series.split("-");
 
-                    if (hoveredSeries && hoveredSeries == series[0] && row.toString() == series[1]) {
-                        $('.dw-chart-body').addClass("hovered");
-                        bar.node.classList.add("hover");
-                    }
-                    else bar.node.classList.remove('hover');
-                    if (!hoveredSeries) $('.dw-chart-body').removeClass("hovered");
-                });           
+                if (hoveredSeries && hoveredSeries == series[0] && row.toString() == series[1]) {
+                    $('.dw-chart-body').addClass("hovered");
+                    $(bar.node).addClass("hover");
+                } else {
+                    $(bar.node).removeClass('hover');  
+                } 
+
+                if (!hoveredSeries) $('.dw-chart-body').removeClass("hovered");
+            });           
         },
 
         unhoverSeries: function() {
