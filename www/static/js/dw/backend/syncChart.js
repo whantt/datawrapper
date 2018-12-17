@@ -1,4 +1,4 @@
-
+/* globals $, dw, _, define */
 define(function() {
 
     return function(chart) {
@@ -8,32 +8,54 @@ define(function() {
             saveCallbacks = [];
 
         function save() {
-            return $.ajax({
-                url: '/api/2/charts/'+chart.get('id') + window.location.search,
-                type: 'PUT',
-                dataType: 'json',
-                data: JSON.stringify(chart.attributes()),
-                processData: false,
-                success: function(data) {
-                    //console.debug('save completed');
-                    if (data.status == "ok") {
-                        // run callbacks
-                        unsavedChanges = false;
-                        _.each(saveCallbacks, function(cb) {
-                            cb(chart);
-                        });
-                        nextSaveDeferred.resolve(data);
-                        // create new deferred
-                        nextSaveDeferred = $.Deferred();
-                    } else {
-                        console.warn('could not save the chart', data);
-                        dw.backend.logError('The chart changes could not be saved because of a server error.', '.chart-editor');
-                    }
+
+            window.fetch(
+                // '/api/2/charts/'+chart.get('id') + window.location.search, {
+                '//api.datawrapper.local/3/charts/'+chart.get('id') + window.location.search,
+            {
+                method: 'PUT',
+                mode: 'cors',
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                error: function(err, res) {
-                    console.log(err.responseText);
+                credentials: 'include',
+                body: JSON.stringify(chart.attributes())
+            })
+            .then(res => {
+                if (res.status !== 200) return new Error(res.statusText);
+                return res.text();
+            })
+            .then(text => {
+                // console.log('status', res);
+                try {
+                    return JSON.parse(text);
+                } catch (Error) {
+                    // could not parse json, so just return text
+                    console.warn('malformed json input', text);
+                    return text;
+                }
+            })
+            .then(function(data) {
+                if (data.status === "ok") {
+                    // run callbacks
+                    unsavedChanges = false;
+                    _.each(saveCallbacks, function(cb) {
+                        cb(chart);
+                    });
+                    nextSaveDeferred.resolve(data);
+                    // create new deferred
+                    nextSaveDeferred = $.Deferred();
+                } else {
+                    console.warn('could not save the chart', data);
                     dw.backend.logError('The chart changes could not be saved because of a server error.', '.chart-editor');
                 }
+            })
+            .catch((err) => {
+                console.error(err);
+                console.warn(err.responseText);
+                dw.backend.logError('The chart changes could not be saved because of a server error.', '.chart-editor');
+
             });
         }
 
@@ -106,7 +128,7 @@ define(function() {
             saveTimeout = setTimeout(save, 800);
         });
 
-        window.onbeforeunload = function(e) {
+        window.onbeforeunload = function() {
             if (unsavedChanges) return 'Caution: unsaved changes';
         };
     };
