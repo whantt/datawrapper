@@ -25,6 +25,9 @@
     export default {
         helpers: { __ },
         computed: {
+            active({$type}) {
+                return $type;
+            },
             chartTypes({$visualizations}) {
                 return $visualizations.filter(vis => vis.title &&
                     vis['svelte-workflow'] === 'chart' &&
@@ -39,13 +42,8 @@
         },
         methods: {
             select(vis) {
-                this.set({active: vis.id});
+                this.store.set({type: vis.id});
             }
-        },
-        data() {
-            return {
-                active: 'd3-bars'
-            };
         }
     }
 </script>
