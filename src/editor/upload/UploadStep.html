@@ -108,8 +108,8 @@
     export default {
         oncreate() {
             app = this;
-            const {dw_chart} = this.store.get();
-            const method = dw_chart.get('metadata.data.upload-method', 'copy');
+            const chart = this.store;
+            const method = chart.getMetadata('data.upload-method', 'copy');
             this.set({defaultMethod: method});
             coreUploads.forEach(u => {
                 if (u.id === method) {
@@ -146,15 +146,12 @@
                 }
             },
             btnAction (btn) {
+                const chart = this.store;
                 this.set({active:btn});
                 if (btn.id === 'copy') {
                     // turn off externalData, if still set
-                    const {dw_chart} = this.store.get();
-                    if (dw_chart.get('externalData')) {
-                        dw_chart.set('externalData', '');
-                        setTimeout(() => {
-                            dw.backend.currentChart.save();
-                        }, 1000);
+                    if (chart.get('externalData')) {
+                        chart.set({ externalData: '' });
                     }
                 }
                 let activeKey = btn.id;
@@ -165,8 +162,7 @@
                         // this.set({active:coreUploads[0]});
                     }, 1000);
                 }
-                const {dw_chart} = this.store.get();
-                dw_chart.set('metadata.data.upload-method', activeKey);
+                chart.setMetadata('data.upload-method', activeKey);
                 if (btn.action) btn.action();
                 if (btn.mainPanel) this.set({MainPanel:btn.mainPanel});
                 if (btn.sidebar) this.set({Sidebar:btn.sidebar});
@@ -207,12 +203,16 @@
                     }
                     event.dataTransfer.items.clear();
                 }
+                const chart = this.store;
                 for (let i=0; i<files.length; i++) {
                     if (files[i].type.substr(0,5) === 'text/') {
                         return readFile(files[i], (err, result) => {
-                            putJSON(`/api/charts/${dw.backend.currentChart.get('id')}/data`, result, () => {
-                                window.location.href = 'describe';
-                            });
+                            chart.set({_rawData: result});
+                            chart.storeData(() => {
+                                setTimeout(() => {
+                                    chart.fire('navigate', 'describe');
+                                }, 500);
+                            })
                         });
                     }
                 }
