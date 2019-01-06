@@ -1,5 +1,6 @@
 <div class="story-title control-group">
-    <div class="pull-left">
+    <div class="pull-left" style="position: relative;">
+        <label class="hide-title"><input type="checkbox"> hide</label>
         <label class="control-label" for="text-title">{__('Title')}</label>
         <input bind:value="$title" class="input-xlarge span4" autocomplete="off" type="text">
 
@@ -28,11 +29,16 @@
 </div>
 
 <script>
-
-    import {__} from '../shared/l10n';
+    import {__} from '../../shared/l10n';
 
     export default {
         helpers: { __ },
     }
 
 </script>
+
+<style type="text/css">
+    .hide-title {
+        display: block;position: absolute;right: 0;top: 0;font-size: 12px;color: #777;
+    }
+</style>

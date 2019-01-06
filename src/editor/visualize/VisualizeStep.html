@@ -9,13 +9,17 @@
             </ul>
 
             <div class="tab-container">
-                <div class="section">
+                <div class="section {active}">
                     {#if active === 'vis'}
                         <VisSelector />
                     {:elseif active == 'refine'}
                         REFINE
                     {:elseif active == 'annotate'}
-                        ANNOTATE
+                        <div class="story">
+                            <Group label="{__('Annotate your chart')}">
+                                <ChartDescription />
+                            </Group>
+                        </div>
                     {:elseif active == 'design'}
                         DESIGN
                     {/if}
@@ -34,11 +38,13 @@
 
 <script>
     import {__} from '../../shared/l10n';
+    import Group from '../Group.html';
     import VisSelector from './VisSelector.html';
+    import ChartDescription from './ChartDescription.html';
 
     export default {
         helpers: { __ },
-        components: {VisSelector},
+        components: {VisSelector, ChartDescription, Group},
         methods: {
             tabNav(event, id) {
                 event.preventDefault();
