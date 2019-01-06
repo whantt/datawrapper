@@ -94,6 +94,10 @@ chart.set({
             }
         }
 
+        if (previous && changed._rawData && previous._rawData !== undefined) {
+            chart.storeData();
+        }
+
         if (changed.dataset) {
             chart.storeData();
         }
