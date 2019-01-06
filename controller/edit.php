@@ -132,6 +132,7 @@
                 'workflow' => $workflows[$vis['svelte-workflow']],
                 'userArray' => $userArray,
                 'vis' => $vis,
+                'visualizations' => DatawrapperVisualization::all(),
                 'chartLocales' => array_map(function($s) {
                     $s = explode('|', $s);
                     return ['value'=>$s[0], 'label'=>$s[1]];

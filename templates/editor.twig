@@ -19,10 +19,10 @@ require(['{{workflow.module}}'], function(mod) {
             active: {{chart.lastEditStep}},
             maxStep: {{chart.lastEditStep}},
             step: '{{step}}',
-            visualization: {{vis|json|raw}},
+            visualization: {{vis|json|raw}}
         },
         mod.data || {},
-        {{workflow.data|json|raw}} || {},
+        {{ workflow.data|json|raw }} || {},
         {{ twig_data | json | raw }});
 
     var chart = new mod.Chart({{chart.toStruct()|json|raw}});
@@ -38,6 +38,7 @@ require(['{{workflow.module}}'], function(mod) {
         locales: {{chartLocales|json|raw}},
         actions: {{chartActions|json|raw}},
         themes: {{userThemes|json|raw}},
+        visualizations: {{visualizations|json|raw}},
         dataset: chartData ? JSON.parse(chartData) : {}
     });
 
