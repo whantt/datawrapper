@@ -181,6 +181,24 @@ class Chart extends Store {
         return this.get()._rawData;
     }
 
+    dataCellChanged(column, row) {
+        var changes = this.getMetadata('data.changes', []),
+            transpose = this.get('data.transpose', false),
+            changed = false;
+
+        changes.forEach(change => {
+            let r = "row", c = "column";
+            if (transpose) {
+                r = "column";
+                c = "row";
+            }
+            if (column === change[c] && change[r] === row) {
+                changed = true;
+            }
+        });
+        return changed;
+    }
+
 }
 
 Chart.prototype.observeDeep = observeDeep;
