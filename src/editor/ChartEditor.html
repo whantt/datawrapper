@@ -4,10 +4,9 @@
     {#if step=='upload'}
     <UploadStep
         bind:readonly="$dataReadonly"
-        bind:datasets
-        bind:chart="$chart" />
+        bind:datasets />
     {:elseif step=='describe'}
-    DESCRIBE
+    <DescribeStep />
     {:elseif step=='visualize'}
     <VisualizeStep />
     {:elseif step=='publish'}
@@ -21,14 +20,15 @@
     import EditorNav from './nav/EditorNav.html';
     import UploadStep from './upload/UploadStep.html';
     import VisualizeStep from './visualize/VisualizeStep.html';
-    // import DescribeStep from '../describe/App.html';
+    import DescribeStep from './describe/DescribeStep.html';
     import PublishSidebar from '../publish/PublishSidebar.html';
     import {__} from '../shared/l10n';
     // console.log('x');
 
     export default {
         helpers: {__},
-        components: { EditorNav, UploadStep, VisualizeStep, PublishSidebar },
+        components: { EditorNav, UploadStep, VisualizeStep,
+            PublishSidebar, DescribeStep },
         oncreate() {
         },
         data() {
