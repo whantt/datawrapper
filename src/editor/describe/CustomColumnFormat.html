@@ -51,13 +51,13 @@
 </div>
 
 <script>
-    /* global __,dw */
-    import Checkbox from '../controls/Checkbox.html';
-    import Select from '../controls/Select.html';
+    /* globals dw */
+    import Checkbox from '../../controls/Checkbox.html';
+    import Select from '../../controls/Select.html';
     import _throttle from 'underscore-es/throttle';
-    import {arrayToObject} from '../shared/utils.js';
-    import clone from '../shared/clone.js';
-    import {__} from '../shared/l10n';
+    import {arrayToObject} from '../../shared/utils.js';
+    import clone from '../../shared/clone.js';
+    import {__} from '../../shared/l10n';
 
     export default {
         components: { Checkbox, Select },
@@ -79,7 +79,7 @@
                     return Math.max(acc, Math.min(3,dw.utils.tailLength(cur)));
                 }, 0);
 
-                if (ndim == div) {
+                if (ndim === div) {
                     div = 0;
                     ndim = 0;
                 }
@@ -101,7 +101,7 @@
                 const chart = this.store.get('dw_chart');
                 const columnFormats = arrayToObject(chart.get('metadata.data.column-format', {}));
                 let columnFormat = clone(columnFormats[column.name()]);
-                if (!columnFormat || columnFormat == 'auto' || columnFormat.length !== undefined) {
+                if (!columnFormat || columnFormat === 'auto' || columnFormat.length !== undefined) {
                     // no valid column format
                     columnFormat = {
                         type: 'auto',
@@ -146,8 +146,8 @@
                 const {column} = this.get();
                 const columnFormats = arrayToObject(clone(chrt.get('metadata.data.column-format', {})));
                 const oldFormat = columnFormats[column.name()];
-                if (!oldFormat || JSON.stringify(oldFormat) != JSON.stringify(colFormat)) {
-                    if (colFormat['number-divisor'] == 'auto') {
+                if (!oldFormat || JSON.stringify(oldFormat) !== JSON.stringify(colFormat)) {
+                    if (colFormat['number-divisor'] === 'auto') {
                         // stop here and compute divisor automatically
                         setTimeout(() => this.autoDivisor(), 100);
                         return;
@@ -155,7 +155,7 @@
                     columnFormats[column.name()] = clone(colFormat);
                     chrt.set('metadata.data.column-format', columnFormats);
                     if (chrt.saveSoon) chrt.saveSoon();
-                    if (!oldFormat || oldFormat.type != colFormat.type) updateTable();
+                    if (!oldFormat || oldFormat.type !== colFormat.type) updateTable();
                     else renderTable();
                 }
             });

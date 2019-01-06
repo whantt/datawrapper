@@ -164,12 +164,12 @@
     import ComputedColumnEditor from './ComputedColumnEditor.html';
     import CustomColumnFormat from './CustomColumnFormat.html';
     import Histogram from './Histogram.html';
-    import Handsontable from '../controls/hot/Handsontable.html';
-    import Checkbox from '../controls/Checkbox.html';
+    import Handsontable from '../../controls/hot/Handsontable.html';
+    import Checkbox from '../../controls/Checkbox.html';
 
-    import {__} from '../shared/l10n';
-    import {arrayToObject} from '../shared/utils.js';
-    import clone from '../shared/clone.js';
+    import {__} from '../../shared/l10n';
+    import {arrayToObject} from '../../shared/utils.js';
+    import clone from '../../shared/clone.js';
 
     export default {
         components: { Handsontable, Checkbox, ComputedColumnEditor,
@@ -208,9 +208,9 @@
         },
         oncreate() {
             window.addEventListener('keypress', (event) => {
-                if (event.ctrlKey && event.key == 'f') {
+                if (event.ctrlKey && event.key === 'f') {
                     event.preventDefault();
-                    if (this.refs.search != window.document.activeElement) {
+                    if (this.refs.search !== window.document.activeElement) {
                         this.refs.search.focus();
                     } else {
                         this.nextResult(+1);
@@ -220,7 +220,7 @@
             const sync = (svelte_key, metadata_key) => {
                 this.observe(svelte_key, (svelte_value) => {
                     this.store.get('dw_chart').set(`${metadata_key}`, svelte_value);
-                    if (svelte_key == 'locale') {
+                    if (svelte_key === 'locale') {
                         if (!svelte_value) return;
                         this.store.get('dw_chart')
                             .locale(svelte_value, () => {
@@ -245,7 +245,7 @@
                 this.set({searchIndex});
             },
             keyPress (event) {
-                if (event.key == 'F3' || event.key == 'Enter')
+                if (event.key === 'F3' || event.key === 'Enter')
                     this.nextResult(event.shiftKey ? -1 : 1);
             },
             toggleTranspose() {

@@ -55,8 +55,8 @@
     import _range from 'underscore-es/range';
     import _countBy from 'underscore-es/countBy';
     import _keys from 'underscore-es/keys';
-    import { toFixed } from '../shared/utils.js';
-    import {__} from '../shared/l10n';
+    import { toFixed } from '../../shared/utils.js';
+    import {__} from '../../shared/l10n';
     import { scaleLinear, scaleBand } from 'd3-scale';
     import { histogram, max, min, extent, mean, median,
        thresholdSturges } from 'd3-array';
@@ -87,7 +87,7 @@
         helpers: {
             tooltip(bin, i, bins, len) {
                 const tt = i === 0 ? __("describe / histogram / tooltip / first") :
-                    i == bins.length-1 ? __("describe / histogram / tooltip / last") :
+                    i === bins.length-1 ? __("describe / histogram / tooltip / last") :
                     __("describe / histogram / tooltip");
                 return tt.replace('$1', bin.length)
                     .replace('$2', pct(bin.length / len))

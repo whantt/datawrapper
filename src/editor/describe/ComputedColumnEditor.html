@@ -85,7 +85,6 @@ label {
 </style>
 
 <script>
-    /* global __ */
     import CodeMirror from 'cm/lib/codemirror';
     import 'cm/mode/javascript/javascript';
     import 'cm/addon/mode/simple';
@@ -94,8 +93,8 @@ label {
     import 'cm/addon/display/placeholder';
 
     import _debounce from 'underscore-es/debounce';
-    import clone from '../shared/clone.js';
-    import {__} from '../shared/l10n';
+    import clone from '../../shared/clone.js';
+    import {__} from '../../shared/l10n';
 
     export default {
         data() {
@@ -122,7 +121,7 @@ label {
                 const changes = chart.get('metadata.data.changes', []);
                 const changes_new = [];
                 changes.forEach(c => {
-                    if (c.column == col_index) return; // skip
+                    if (c.column === col_index) return; // skip
                     if (c.column > col_index) c.column--;
                     changes_new.push(c);
                 });
@@ -152,7 +151,7 @@ label {
                 const keywords = ['sum','round','min','max','median','mean'];
                 metaColumns.forEach(function(col) {
                     keywords.push(col.key);
-                    if (col.type == 'number') {
+                    if (col.type === 'number') {
                         keywords.push(col.key+'__sum');
                         keywords.push(col.key+'__min');
                         keywords.push(col.key+'__max');
@@ -192,7 +191,7 @@ label {
 
                 const keywords = app.get('keywords');
 
-                if (token.type == 'variable') {
+                if (token.type === 'variable') {
                     match = keywords.filter(function(chk) {
                         return chk.toLowerCase()
                             .indexOf(token.string.toLowerCase()) === 0;
@@ -235,13 +234,13 @@ label {
 
             this.observe('formula', (formula) => {
                 // update codemirror
-                if (formula != cm.getValue()) {
+                if (formula !== cm.getValue()) {
                     cm.setValue(formula);
                 }
                 // update dw.chart
                 const {column} = this.get();
                 const customCols = clone(chart.get('metadata.describe.computed-columns', {}));
-                if (customCols[column.name()] != formula) {
+                if (customCols[column.name()] !== formula) {
                     customCols[column.name()] = formula;
                     chart.set('metadata.describe.computed-columns', customCols);
                     if (chart.saveSoon) chart.saveSoon();
@@ -256,7 +255,7 @@ label {
                 const col = ds.columnOrder()[ds.indexOf(column.name())];
                 let last_col_name_change_i = -1;
                 changes.forEach((change,i) => {
-                    if (change.column == col && change.row === 0) {
+                    if (change.column === col && change.row === 0) {
                         last_col_name_change_i = i;
                     }
                 });
@@ -279,7 +278,7 @@ label {
                 this.set({formula: cm.getValue()});
             });
 
-            this.observe('metaColumns', (cols) => {
+            this.observe('metaColumns', () => {
                 var columns_regex = new RegExp(`(?:${this.get('keywords').join('|')})`);
                 CodeMirror.defineSimpleMode("simplemode", {
                     // The start state contains the rules that are intially used
@@ -301,10 +300,10 @@ label {
                         {regex: /\/(?:[^\\]|\\.)*?\//, token: "variable-3"},
                         // A next property will cause the mode to move to a different state
                         {regex: /\/\*/, token: "comment", next: "comment"},
-                        {regex: /[-+\/*=<>!]+/, token: "operator"},
+                        {regex: /[-+/*=<>!]+/, token: "operator"},
                         // indent and dedent properties guide autoindentation
-                        {regex: /[\{\[\(]/, indent: true},
-                        {regex: /[\}\]\)]/, dedent: true},
+                        {regex: /[{[(]/, indent: true},
+                        {regex: /[}\])]/, dedent: true},
                         {regex: columns_regex, token: 'variable-2'},
                         {regex: /[a-z$][\w$]*/, token: "variable"},
                         // You can embed other modes with the mode property. This rule
