@@ -29,7 +29,15 @@
         methods: {
             select(step, index) {
                 this.set({active: step.id});
+                if (index === undefined) {
+                    const {steps} = this.get();
+                    index = steps.indexOf(_findWhere(steps, {id: step.id}));
+                }
                 const {lastEditStep} = this.store.get();
+                window.history.pushState({
+                    id: this.store.get().id,
+                    step: step
+                }, null, step.id);
                 this.store.set({lastEditStep: Math.max(lastEditStep, index+1)})
                 trackPageView();
             },
@@ -41,7 +49,7 @@
                         this.set({active: step.id});
                         trackPageView();
                     } else {
-                        // need to reload
+                        // it's a different chart, we need to reload
                         window.location.href = `/edit/${id}/${step.id}`;
                     }
                 }
@@ -52,6 +60,9 @@
             const {lastEditStep, id} = this.store.get();
             const step = _findWhere(steps, {id:active});
             this.store.set({lastEditStep: Math.max(lastEditStep, steps.indexOf(step)+1)});
+            this.store.on('navigate', (step) => {
+                this.select({id:step});
+            });
             // make sure the initial state is stored
             window.history.replaceState({step,id}, step.title);
         },
