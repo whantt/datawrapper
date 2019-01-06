@@ -164,7 +164,7 @@
     import ComputedColumnEditor from './ComputedColumnEditor.html';
     import CustomColumnFormat from './CustomColumnFormat.html';
     import Histogram from './Histogram.html';
-    import Handsontable from '../../controls/hot/Handsontable.html';
+    import Handsontable from './Handsontable.html';
     import Checkbox from '../../controls/Checkbox.html';
 
     import {__} from '../../shared/l10n';
@@ -172,7 +172,8 @@
     import clone from '../../shared/clone.js';
 
     export default {
-        components: { Handsontable, Checkbox, ComputedColumnEditor,
+        components: {
+            Handsontable, Checkbox, ComputedColumnEditor,
             CustomColumnFormat, Histogram },
         helpers: { __ },
         computed: {
