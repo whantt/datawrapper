@@ -17,7 +17,7 @@ import TypeAhead from './TypeAhead.html';
 import Section from '../editor/Section.html';
 import Group from '../editor/Group.html';
 import Help from '../editor/Help.html';
-import EditorNav from '../editor/EditorNav.html';
+import EditorNav from '../editor/nav/EditorNav.html';
 
 export default {
     Checkbox, Color, ColorPicker, Group, NumberInput, Switch, Dropdown,
