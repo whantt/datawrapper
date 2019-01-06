@@ -11,16 +11,11 @@ const production = !process.env.ROLLUP_WATCH;
 
 const targets = [];
 
-build('upload');
-build('describe');
 build('controls', {no_amd:true});
 build('controls/hot', {no_amd:true});
-build('publish', {append:'_old'});
-build('publish', {no_amd:true, entry:'index.js'});
 build('publish/sidebar', {no_amd:true});
-build('highlight');
 build('editor');
-build('account');
+// build('account');
 
 export default targets;
 

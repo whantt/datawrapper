@@ -1,0 +1,29 @@
+<div class="vis-selector-unfolded">
+    <div class="vis-thumbs">
+        {#each visualizations as vis}
+        <div class="vis-thumb {active===vis.id?'active':''}">
+            {@html vis.icon}
+            <div class="title">{vis.title}</div>
+        </div>
+        {/each}
+    </div>
+</div>
+
+<script>
+    export default {
+        data() {
+            return {
+                active: 'd3-bars',
+                visualizations: [{
+                    id: 'd3-bars',
+                    title: 'Bar Chart',
+                    icon: '<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n\t viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">\n<rect x="0.1" width="59.2" height="21.6"/>\n<rect x="0.1" y="31.7" width="99.8" height="21.6"/>\n<rect x="0.1" y="63.4" width="88.8" height="21.6"/>\n</svg>\n'
+                },{
+                    id: 'd3-bars2',
+                    title: 'Bar Chart',
+                    icon: '<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n\t viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">\n<rect x="0.1" width="59.2" height="21.6"/>\n<rect x="0.1" y="31.7" width="99.8" height="21.6"/>\n<rect x="0.1" y="63.4" width="88.8" height="21.6"/>\n</svg>\n'
+                }]
+            };
+        }
+    }
+</script>

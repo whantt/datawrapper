@@ -1,0 +1,61 @@
+<div class="dw-create-visualize chart-editor chart-editor-web">
+    <div class="row">
+        <div class="span4 visconfig" style="min-height: 516px;">
+            <ul class="nav nav-tabs visualize-nav-tabs" data-target="tab-container">
+                <li class="{active==='vis'?'active':''}"><a on:click="tabNav(event, 'vis')" href="#vis">{@html __('Chart type')}</a></li>
+                <li class="{active==='refine'?'active':''}"><a on:click="tabNav(event, 'refine')" href="#refine">{@html __('Refine')}</a></li>
+                <li class="{active==='annotate'?'active':''}"><a on:click="tabNav(event, 'annotate')" href="#annotate" >{@html __('Annotate')}</a></li>
+                <li class="{active==='design'?'active':''}"><a on:click="tabNav(event, 'design')" href="#design" >{@html __('Design')}</a></li>
+            </ul>
+
+            <div class="tab-container">
+                <div class="section">
+                    {#if active === 'vis'}
+                        <VisSelector />
+                    {:elseif active == 'refine'}
+                        REFINE
+                    {:elseif active == 'annotate'}
+                        ANNOTATE
+                    {:elseif active == 'design'}
+                        DESIGN
+                    {/if}
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="span8">
+            PREVIEW
+        </div>
+
+    </div>
+</div>
+
+<script>
+    import {__} from '../../shared/l10n';
+    import VisSelector from './VisSelector.html';
+
+    export default {
+        helpers: { __ },
+        components: {VisSelector},
+        methods: {
+            tabNav(event, id) {
+                event.preventDefault();
+                this.set({active:id});
+            }
+        },
+        data() {
+            return {
+                active: 'vis'
+            }
+        }
+    }
+</script>
+
+<style>
+    .section {
+        clear:both;
+        margin-top: 20px;
+    }
+</style>
