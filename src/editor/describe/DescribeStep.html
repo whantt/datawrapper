@@ -58,14 +58,14 @@
 
                 <Checkbox
                     label="{ __("First row as label") }"
-                    bind:value="firstRowIsHeader" />
+                    bind:value="$metadata.data['horizontal-header']" />
 
                 <h4>{__("describe / locale-select / hed")}</h4>
 
                 <p>{@html __("describe / locale-select / body")}</p>
 
-                <select bind:value="locale">
-                    {#each locales as locale}
+                <select bind:value="$language">
+                    {#each $locales as locale}
                     <option value="{locale.value}">{locale.label} ({locale.value})</option>
                     {/each}
                 </select>
@@ -136,8 +136,8 @@
 
             <Handsontable ref:hot
                 bind:data="chartData"
-                bind:transpose
-                bind:firstRowIsHeader
+                bind:transpose="$metadata.data.transpose"
+                bind:firstRowIsHeader="$metadata.data['horizontal-header']"
                 bind:fixedColumnsLeft
                 bind:activeColumn
                 bind:readonly
@@ -160,7 +160,6 @@
 </div>
 
 <script>
-    /* global chart */
     import ComputedColumnEditor from './ComputedColumnEditor.html';
     import CustomColumnFormat from './CustomColumnFormat.html';
     import Histogram from './Histogram.html';
@@ -170,6 +169,8 @@
     import {__} from '../../shared/l10n';
     import {arrayToObject} from '../../shared/utils.js';
     import clone from '../../shared/clone.js';
+
+    let _chart;
 
     export default {
         components: {
@@ -191,12 +192,12 @@
             activeValues ({ activeColumn }) {
                 return activeColumn ? activeColumn.values() : [];
             },
-            activeFormat ({ activeColumn, $dw_chart }) {
-                return activeColumn ? $dw_chart.columnFormatter(activeColumn) : d => d;
+            activeFormat ({ activeColumn }) {
+                return activeColumn ? _chart.columnFormatter(activeColumn) : d => d;
             },
-            columns ({ activeColumn }) {
-                const ds = chart.dataset();
-                if (!activeColumn) return ds ? ds.columns() : [];
+            columns({ activeColumn, $dataset }) {
+                const ds = $dataset;
+                if (!activeColumn) return ds && ds.columns ? ds.columns() : [];
                 try {
                     return ds.columns().filter(col => !col.isComputed);
                 } catch(e) {
@@ -208,6 +209,9 @@
             }
         },
         oncreate() {
+            // we keep a reference to the store bc we can't access
+            // the store methods in computed columns
+            _chart = this.store;
             window.addEventListener('keypress', (event) => {
                 if (event.ctrlKey && event.key === 'f') {
                     event.preventDefault();
@@ -218,24 +222,11 @@
                     }
                 }
             });
-            const sync = (svelte_key, metadata_key) => {
-                this.observe(svelte_key, (svelte_value) => {
-                    this.store.get('dw_chart').set(`${metadata_key}`, svelte_value);
-                    if (svelte_key === 'locale') {
-                        if (!svelte_value) return;
-                        this.store.get('dw_chart')
-                            .locale(svelte_value, () => {
-                                this.refs.hot.render();
-                            });
-                    }
-                });
-            };
-            sync('transpose', 'metadata.data.transpose');
-            sync('firstRowIsHeader', 'metadata.data.horizontal-header');
-            sync('locale', 'language');
-            this.observe('activeColumn', (ac) => {
-                if (!ac) this.set({forceColumnFormat:false});
-            });
+        },
+        onstate({changed, current}) {
+            if (changed.activeColumn && current.activeColumn) {
+                this.set({forceColumnFormat:false});
+            }
         },
         methods: {
             nextResult (diff) {
@@ -251,34 +242,32 @@
             },
             toggleTranspose() {
                 this.set({activeColumn: false});
-                this.set({transpose: !this.get('transpose')});
+                this.set({transpose: !this.get().transpose});
                 setTimeout(() => this.refs.hot.update(), 500);
                 // ;
             },
             revertChanges() {
-                const chart = this.store.get('dw_chart');
-                chart.set('metadata.data.changes', []);
-                chart.saveSoon();
+                this.store.setMetadata('data.changes', []);
                 this.refs.hot.update();
             },
             cmFocus () {
                 setTimeout(() => {
-                    this.refs.hot.get('hot').render();
+                    this.refs.hot.get().hot.render();
                 }, 100);
             },
             addComputedColumn() {
-                const chart = this.store.get('dw_chart');
+                const chart = this.store;
                 const ds = chart.dataset();
-                const computed = arrayToObject(chart.get('metadata.describe.computed-columns', {}));
+                const computed = arrayToObject(
+                    chart.getMetadata('describe.computed-columns', {})
+                );
                 // find new id
                 let i = 1;
-                while (ds.hasColumn(`Column ${i}`)) {
-                    i++;
-                }
+                while (ds.hasColumn(`Column ${i}`)) { i++; }
                 const id = `Column ${i}`;
                 computed[id] = '';
-                chart.set('metadata.describe.computed-columns', computed);
-                chart.saveSoon();
+                chart.setMetadata('describe.computed-columns', computed);
+                //
                 const ds2 = chart.dataset(true);
                 this.refs.hot.update();
                 this.set({ activeColumn: ds2.column(id) });
@@ -295,36 +284,34 @@
                 this.set({forceColumnFormat:val});
             },
             hideMultiple(columns, hide) {
-                const chart = this.store.get('dw_chart');
-                const colFmt = clone(chart.get('metadata.data.column-format', {}));
+                const chart = this.store;
+                const colFmt = clone(chart.getMetadata('data.column-format', {}));
                 columns.forEach(col => {
                     if (colFmt[col.name()]) colFmt[col.name()].ignore = hide;
                     else {
                         colFmt[col.name()] = {type:'auto',ignore:hide};
                     }
                 });
-                chart.set('metadata.data.column-format', colFmt);
-                chart.saveSoon();
+                chart.setMetadata('data.column-format', colFmt);
                 setTimeout(() => {
-                    this.refs.hot.get('hot').render();
+                    this.refs.hot.get().hot.render();
                 }, 10);
                 this.set({multiSelection: false});
             }
         },
         data() {
             return {
-                locale: 'en-US',
                 search: '',
                 chartData: '',
                 readonly: false,
-                transpose: false,
-                firstRowIsHeader: true,
                 searchIndex: 0,
                 activeColumn: false,
                 customColumn: false,
                 columnFormat: false,
                 multiSelection: false,
                 forceColumnFormat: false,
+                fixedColumnsLeft: 0,
+                has_changes: false,
                 searchResults: [],
                 sortBy: '-',
                 sortDir: true,
