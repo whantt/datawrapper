@@ -44,7 +44,7 @@ class Chart extends Store {
         if (csv && !externalData) dsopts.csv = csv;
         else dsopts.url = externalData || 'data.csv';
 
-        if (dsopts.csv) this._rawData = dsopts.csv;
+        if (dsopts.csv) this.set({_rawData: dsopts.csv });
 
         const datasource = this.getMetadata('data.json',false) ?
             json(dsopts) : delimited(dsopts);
@@ -55,7 +55,7 @@ class Chart extends Store {
             // dataset_change_callbacks.fire(chart, ds);
             return ds;
         }).catch((e) => {
-            console.log('nope', e)
+            console.error('nope', e)
         });
     }
 
@@ -178,7 +178,7 @@ class Chart extends Store {
     }
 
     rawData() {
-        return this._rawData;
+        return this.get()._rawData;
     }
 
 }
@@ -188,5 +188,5 @@ Chart.prototype.observeDeep = observeDeep;
 export default Chart;
 
 function is_equal(a, b) {
-    return JSON.stringify(a) == JSON.stringify(b);
+    return JSON.stringify(a) === JSON.stringify(b);
 }
