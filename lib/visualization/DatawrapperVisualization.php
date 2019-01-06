@@ -69,6 +69,10 @@ class DatawrapperVisualization {
         if (empty($meta['svelte-workflow'])) {
             $meta['svelte-workflow'] = 'chart';
         }
+        if (!empty($GLOBALS['dw_config']['vis_archive']) &&
+            in_array($meta['id'], $GLOBALS['dw_config']['vis_archive'])) {
+            $meta['archived'] = true;
+        }
         $this->visualizations[$meta['id']] = $meta;
         if ($asset_callback) {
             $this->vis_asset_callbacks[$meta['id']] = $asset_callback;
