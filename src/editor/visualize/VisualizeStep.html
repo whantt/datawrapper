@@ -12,6 +12,9 @@
                 <div class="section {active}">
                     {#if active === 'vis'}
                         <VisSelector />
+                        <p>
+                            <b>{__("Hint")}:</b> {@html __("visualize / transpose-hint").replace('[LINK]','<a href="#" id="btn-transpose"><img style="height:14px" src="/static/css/chart-editor/transpose.png" />').replace('[/LINK]', '</a>')}
+                        </p>
                     {:elseif active == 'refine'}
                         REFINE
                     {:elseif active == 'annotate'}
