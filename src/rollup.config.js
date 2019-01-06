@@ -12,7 +12,7 @@ const production = !process.env.ROLLUP_WATCH;
 const targets = [];
 
 build('controls', {no_amd:true});
-build('controls/hot', {no_amd:true});
+// build('controls/hot', {no_amd:true});
 build('publish/sidebar', {no_amd:true});
 build('editor');
 // build('account');
@@ -35,7 +35,12 @@ function build(app_id, opts) {
         external: [
             'chroma',
             'Handsontable',
-            'cm',
+            'cm/lib/codemirror',
+            'cm/addon/mode/simple',
+            'cm/addon/hint/show-hint',
+            'cm/addon/edit/matchbrackets',
+            'cm/addon/display/placeholder',
+            'cm/mode/javascript/javascript',
             'vendor',
             '/static/vendor/jschardet/jschardet.min.js',
             '/static/vendor/xlsx/xlsx.full.min.js'
