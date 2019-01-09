@@ -7,10 +7,10 @@
 </form>
 
 <script>
-    /* globals __,dw */
-    import {putJSON} from '../shared/utils.js';
+    /* globals dw */
     import _throttle from 'underscore-es/throttle';
-    import {__} from '../shared/l10n';
+    import {putJSON} from '../../shared/utils.js';
+    import {__} from '../../shared/l10n';
 
     let app;
     const chart = dw.backend.currentChart;
@@ -19,7 +19,6 @@
         const {chartData} = app.get();
         putJSON(`/api/charts/${chart.get('id')}/data`, chartData);
     }, 1000);
-
 
     export default {
         data() {
@@ -32,7 +31,7 @@
             app = this;
         },
         onupdate({changed, current, previous}) {
-            if (changed.chartData && current.chartData && previous && previous.chartData != current.chartData) {
+            if (changed.chartData && current.chartData && previous && previous.chartData !== current.chartData) {
                 updateData();
             }
         },

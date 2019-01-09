@@ -19,7 +19,7 @@
 </style>
 
 <script>
-    import {__} from '../shared/l10n';
+    import {__} from '../../shared/l10n';
 
     /* globals dw */
     export default {
@@ -30,7 +30,7 @@
         },
         helpers: { __ },
         onupdate({changed, current}) {
-            if (changed.selectedDataset && current.selectedDataset != '--') {
+            if (changed.selectedDataset && current.selectedDataset !== '--') {
                 const sel = current.selectedDataset;
                 this.set({chartData: sel.data});
                 if (sel.presets) {

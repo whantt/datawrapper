@@ -58,10 +58,10 @@
     import TextAreaUpload from './TextAreaUpload.html';
     import UploadHelp from './UploadHelp.html';
     import SelectSheet from './SelectSheet.html';
-    import readFile from '../shared/readFile';
-    import readSpreadsheet from '../shared/readSpreadsheet';
-    import {putJSON} from '../shared/utils';
-    import {__} from '../shared/l10n';
+    import readFile from '../../shared/readFile';
+    import readSpreadsheet from '../../shared/readSpreadsheet';
+    import {putJSON} from '../../shared/utils';
+    import {__} from '../../shared/l10n';
 
     let app;
 
@@ -83,22 +83,22 @@
         isFileUpload: true,
         onFileUpload(event) {
             const file = event.target.files[0];
-            if (file.type.substr(0,5) == 'text/' || file.name.substr(file.name.length - 4) == ".csv") {
+            if (file.type.substr(0,5) === 'text/' || file.name.substr(file.name.length - 4) === ".csv") {
                 app.set({Sidebar: UploadHelp});
                 readFile(file, (err, result) => {
                     putJSON(`/api/charts/${dw.backend.currentChart.get('id')}/data`, result, () => {
                         window.location.href = 'describe';
                     });
                 });
-            } else if (file.type.substr(0,12) == 'application/') {
+            } else if (file.type.substr(0,12) === 'application/') {
                 app.set({Sidebar: SelectSheet, sheets:[]}); // reset
                 readSpreadsheet(file, (err, sheets) => {
                     if (err) return app.set({error: err});
                     app.set({sheets});
                 });
             } else {
-                console.log(file.type);
-                console.log(file);
+                // console.log(file.type);
+                // console.log(file);
                 app.set({error: __('upload / csv-required')});
             }
         },
@@ -112,7 +112,7 @@
             const method = dw_chart.get('metadata.data.upload-method', 'copy');
             this.set({defaultMethod: method});
             coreUploads.forEach(u => {
-                if (u.id == method) {
+                if (u.id === method) {
                     this.set({active:u});
                 }
             });
@@ -141,13 +141,13 @@
                 coreUploads.push(btn);
                 this.set({buttons:coreUploads});
                 const {defaultMethod} = this.get();
-                if (btn.id == defaultMethod) {
+                if (btn.id === defaultMethod) {
                     this.btnAction(btn);
                 }
             },
             btnAction (btn) {
                 this.set({active:btn});
-                if (btn.id == 'copy') {
+                if (btn.id === 'copy') {
                     // turn off externalData, if still set
                     const {dw_chart} = this.store.get();
                     if (dw_chart.get('externalData')) {
@@ -158,7 +158,7 @@
                     }
                 }
                 let activeKey = btn.id;
-                if (btn.id == 'upload') {
+                if (btn.id === 'upload') {
                     activeKey = 'copy';
                     setTimeout(() => {
                     // reset after 1sec
@@ -176,7 +176,7 @@
             },
             dragStart (event) {
                 const {active} = this.get();
-                if (active.id == 'copy') {
+                if (active.id === 'copy') {
                     event.preventDefault();
                     this.set({dragover:true});
                 }
@@ -186,7 +186,7 @@
             },
             onFileDrop (event) {
                 const {active} = this.get();
-                if (active.id != 'copy') return;
+                if (active.id !== 'copy') return;
                 // Prevent default behavior (Prevent file from being opened)
                 this.resetDrag();
                 event.preventDefault();
@@ -208,7 +208,7 @@
                     event.dataTransfer.items.clear();
                 }
                 for (let i=0; i<files.length; i++) {
-                    if (files[i].type.substr(0,5) == 'text/') {
+                    if (files[i].type.substr(0,5) === 'text/') {
                         return readFile(files[i], (err, result) => {
                             putJSON(`/api/charts/${dw.backend.currentChart.get('id')}/data`, result, () => {
                                 window.location.href = 'describe';
