@@ -2,6 +2,7 @@
 
 import test from 'ava';
 import List from './List.html';
+import { clickEvent } from '../../test/helpers/utils';
 
 test.beforeEach(t => {
     t.context = document.createElement('div');
@@ -112,7 +113,7 @@ test('Ctrl-clicking another item selects both item', t => {
     t.true(t.context.querySelector('li:first-child').classList.contains('selected'));
 
     // ctrl-click bob
-    keyClick(t.context.querySelector('li + li'), { ctrl: true });
+    clickEvent(t.context.querySelector('li + li'), { ctrl: true });
 
     t.deepEqual(list.get().selected, ['alice', 'bob']);
     t.true(t.context.querySelector('li:first-child').classList.contains('selected'));
@@ -126,7 +127,7 @@ test('Meta-clicking another item selects both item', t => {
     });
 
     // meta-click bob
-    keyClick(t.context.querySelector('li + li'), { meta: true });
+    clickEvent(t.context.querySelector('li + li'), { meta: true });
     t.deepEqual(list.get().selected, ['alice', 'bob']);
 });
 
@@ -140,7 +141,7 @@ test('Ctrl-clicking second item unselects ﬁrst item if not multiselectable', t
     t.true(t.context.querySelector('li:first-child').classList.contains('selected'));
 
     // select alice
-    keyClick(t.context.querySelector('li + li'), { ctrl: true });
+    clickEvent(t.context.querySelector('li + li'), { ctrl: true });
 
     t.deepEqual(list.get().selected, ['bob']);
     t.false(t.context.querySelector('li:first-child').classList.contains('selected'));
@@ -154,7 +155,7 @@ test('Shift-clicking selects range', t => {
     });
 
     // shift-click carol
-    keyClick(t.context.querySelector('li + li + li'), { shift: true });
+    clickEvent(t.context.querySelector('li + li + li'), { shift: true });
 
     t.deepEqual(list.get().selected, ['alice', 'bob', 'carol']);
 });
@@ -166,7 +167,7 @@ test('Shift-clicking again extends range down', t => {
     });
 
     // shift-click eve
-    keyClick(t.context.querySelector('li:nth-child(5)'), { shift: true });
+    clickEvent(t.context.querySelector('li:nth-child(5)'), { shift: true });
     t.deepEqual(list.get().selected, ['carol', 'david', 'eve']);
 });
 
@@ -177,7 +178,7 @@ test('Shift-clicking again extends range up', t => {
     });
 
     // shift-click eve
-    keyClick(t.context.querySelector('li:first-child'), { shift: true });
+    clickEvent(t.context.querySelector('li:first-child'), { shift: true });
     t.deepEqual(list.get().selected, ['alice', 'bob', 'carol', 'david']);
 });
 
@@ -188,31 +189,6 @@ test('Ctrl-clicking again extends existing multiselection', t => {
     });
 
     // shift-click eve
-    keyClick(t.context.querySelector('li:first-child'), { ctrl: true });
+    clickEvent(t.context.querySelector('li:first-child'), { ctrl: true });
     t.deepEqual(list.get().selected, ['carol', 'david', 'alice']);
 });
-
-/**
- * simulates a click while pressing ctrl-key
- */
-function keyClick(element, { ctrl, alt, shift, meta }) {
-    const evt = document.createEvent('MouseEvents');
-    evt.initMouseEvent(
-        'click', // type
-        true, // canBubble
-        true, // cancelable
-        window, // view
-        0, // detail (click count)
-        0, // screenX
-        0, // screenY
-        80, // clientX
-        20, // clientY
-        ctrl, // ctrlKey
-        alt, // altKey
-        shift, // shiftKey
-        meta, // metaKey
-        0, // button
-        null // relatedTarget
-    );
-    element.dispatchEvent(evt);
-}
