@@ -90,7 +90,15 @@ function build(appId, opts) {
     );
     add(appId, {
         input: `${appId}/${entry}`,
-        external: ['chroma', 'Handsontable', 'cm', 'vendor', '/static/vendor/jschardet/jschardet.min.js', '/static/vendor/xlsx/xlsx.full.min.js'],
+        external: [
+            'chroma',
+            'Handsontable',
+            'cm',
+            'cm/lib/codemirror',
+            'vendor',
+            '/static/vendor/jschardet/jschardet.min.js',
+            '/static/vendor/xlsx/xlsx.full.min.js'
+        ],
         output: {
             sourcemap: false,
             name: appId,
