@@ -169,13 +169,14 @@
                 this.set({ selected });
             }
         },
-        oncreate() {
-            this.observe('custom', c => {
+        onstate({ changed, current }) {
+            if (changed.custom) {
+                let c = current.custom;
                 if (c && c.length === 0) {
                     c = {};
                 }
                 this.set({ custom: c });
-            });
+            }
         }
     };
 

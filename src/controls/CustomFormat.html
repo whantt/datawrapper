@@ -121,27 +121,25 @@
             }
         },
 
-        oncreate() {
+        onstate({ changed, current, previous }) {
             // watch select input
-            this.observe('selected', (sel, old) => {
-                if (sel === old) return;
-                const { custom } = this.get();
-                this.set({ value: sel !== 'custom' ? sel : custom + ' ' });
-            });
+            if (changed.selected && current.selected) {
+                this.set({ value: current.selected !== 'custom' ? current.selected : current.custom + ' ' });
+            }
             // watch external value changes
-            this.observe('value', (val, old) => {
-                if (val === old) return;
-                const { options } = this.get();
-                for (let o of options) {
-                    if (o.f === val) return this.set({ selected: val });
+            if (changed.value) {
+                for (let o of current.options) {
+                    if (o.f === current.value) {
+                        return this.set({ selected: current.value });
+                    }
                 }
-                this.set({ selected: 'custom', custom: val });
-            });
-            this.observe('custom', (val, old) => {
-                if (val === old) return;
-                const { selected } = this.get();
-                if (selected === 'custom') this.set({ value: val });
-            });
+                this.set({ selected: 'custom', custom: current.value });
+            }
+            if (changed.custom && current.custom) {
+                if (current.selected === 'custom') {
+                    this.set({ value: current.custom });
+                }
+            }
         }
     };
 </script>
