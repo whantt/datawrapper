@@ -49,15 +49,17 @@
             }
         },
         oncreate() {
-            this.store.observe('visualization', visualization => {
-                if (!this.get) return;
-                const state = this.get();
-                if (!state) return;
+            this.store.on('state', ({ current, changed }) => {
+                if (changed.visualization) {
+                    if (!this.get) return;
+                    const state = this.get();
+                    if (!state) return;
 
-                // initialize if state is not yet set
-                if (!state.selected && visualization) {
-                    const selected = this.store.getMetadata('axes', {})[this.get().axis];
-                    this.set({ selected });
+                    // initialize if state is not yet set
+                    if (!state.selected && current.visualization) {
+                        const selected = this.store.getMetadata('axes', {})[this.get().axis];
+                        this.set({ selected });
+                    }
                 }
             });
         },
