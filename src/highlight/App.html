@@ -55,8 +55,11 @@
         helpers: { __ },
         methods: {
             add(element) {
-                const { highlighted } = this.get();
-                if (highlighted.indexOf(element) < 0) highlighted.push(element);
+                // slice to make sure we have a change
+                const highlighted = clone(this.get().highlighted);
+                if (highlighted.indexOf(element) < 0) {
+                    highlighted.push(element);
+                }
                 this.set({ highlighted });
                 setTimeout(() => this.set({ selected: '---' }), 30);
             },
@@ -67,28 +70,37 @@
             }
         },
         oncreate() {
-            this.store.observe('vis', vis => {
-                if (!vis) return;
-                this.set({ highlighted: clone(vis.get('highlighted-series')) });
-                vis.chart().onChange((chart, key) => {
-                    if (key === 'metadata.visualize.highlighted-series') {
-                        this.set({ highlighted: clone(vis.get('highlighted-series')) });
-                    }
-                });
+            this.store.on('state', ({ current, changed, previous }) => {
+                // check if vis type has changed
+                if (changed.vis && current.vis) {
+                    const vis = current.vis;
+                    this.set({ highlighted: clone(vis.get('highlighted-series')) });
+                    vis.chart().onChange((chart, key) => {
+                        if (key === 'metadata.visualize.highlighted-series') {
+                            this.set({ highlighted: clone(vis.get('highlighted-series')) });
+                        }
+                    });
+                }
             });
-            this.observe('highlighted', hl => {
-                const { vis } = this.store.get();
-                if (!vis) return;
+        },
+        onstate({ current, changed, previous }) {
+            // check if selected has changed
+            if (changed.selected) {
+                if (current.selected && current.selected !== '---') {
+                    this.add(current.selected);
+                }
+            }
+        },
+        // eslint-disable-next-line
+        onupdate({ current, changed }) {
+            // check if highlight has changed
+            if (changed.highlighted && current.$vis) {
+                const vis = current.$vis;
                 const old = JSON.stringify(vis.get('highlighted-series'));
-                if (old !== JSON.stringify(hl) && vis) {
-                    vis.chart().set('metadata.visualize.highlighted-series', clone(hl));
+                if (old !== JSON.stringify(current.highlighted) && vis) {
+                    vis.chart().set('metadata.visualize.highlighted-series', clone(current.highlighted));
                 }
-            });
-            this.observe('selected', sel => {
-                if (sel && sel !== '---') {
-                    this.add(sel);
-                }
-            });
+            }
         }
     };
 
