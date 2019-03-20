@@ -136,7 +136,7 @@
 
         methods: {
             autoDivisor() {
-                const chart = this.store.get('dw_chart');
+                const chart = this.store.get().dw_chart;
                 const { column } = this.get();
                 const mtrSuf = dw.utils.metricSuffix(chart.locale());
                 const values = column.values();
@@ -170,7 +170,7 @@
                 });
             },
             getColumnFormat(column) {
-                const chart = this.store.get('dw_chart');
+                const chart = this.store.get().dw_chart;
                 const columnFormats = arrayToObject(chart.get('metadata.data.column-format', {}));
                 let columnFormat = clone(columnFormats[column.name()]);
                 if (!columnFormat || columnFormat === 'auto' || columnFormat.length !== undefined) {
@@ -223,7 +223,7 @@
             });
 
             this.observe('columnFormat', colFormat => {
-                const chrt = this.store.get('dw_chart');
+                const chrt = this.store.get().dw_chart;
                 const { column } = this.get();
                 const columnFormats = arrayToObject(clone(chrt.get('metadata.data.column-format', {})));
                 const oldFormat = columnFormats[column.name()];

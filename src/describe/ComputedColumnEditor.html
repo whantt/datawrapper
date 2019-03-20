@@ -143,7 +143,7 @@
             },
             removeColumn() {
                 const { column } = this.get();
-                const chart = this.store.get('dw_chart');
+                const chart = this.store.get().dw_chart;
                 const ds = chart.dataset();
                 const customCols = clone(chart.get('metadata.describe.computed-columns', {}));
                 delete customCols[column.name()];
@@ -167,7 +167,7 @@
         oncreate() {
             const { column } = this.get();
 
-            const chart = this.store.get('dw_chart');
+            const chart = this.store.get().dw_chart;
             const customCols = chart.get('metadata.describe.computed-columns', {});
 
             this.set({
@@ -192,7 +192,7 @@
                 const token = editor.getTokenAt(cur);
                 let match = [];
 
-                const keywords = app.get('keywords');
+                const keywords = app.get().keywords;
 
                 if (token.type === 'variable') {
                     match = keywords.filter(function(chk) {
@@ -212,7 +212,7 @@
             // });
 
             const cm = CodeMirror.fromTextArea(this.refs.code, {
-                value: this.get('formula') || '',
+                value: this.get().formula || '',
                 mode: 'simple',
                 indentUnit: 2,
                 tabSize: 2,
@@ -284,7 +284,7 @@
             });
 
             this.observe('metaColumns', cols => {
-                var columnsRegex = new RegExp(`(?:${this.get('keywords').join('|')})`);
+                var columnsRegex = new RegExp(`(?:${this.get().keywords.join('|')})`);
                 CodeMirror.defineSimpleMode('simplemode', {
                     // The start state contains the rules that are intially used
                     start: [

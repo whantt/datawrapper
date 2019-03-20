@@ -52,7 +52,7 @@
                 if (!data) return;
 
                 // get chart
-                const chart = this.store.get('dw_chart');
+                const chart = this.store.get().dw_chart;
 
                 // pass dataset through chart to apply changes and computed columns
                 const ds = chart
@@ -107,7 +107,7 @@
                 let changed = false;
                 cells.forEach(([row, col, oldValue, newValue]) => {
                     if (oldValue !== newValue) {
-                        const chart = this.store.get('dw_chart');
+                        const chart = this.store.get().dw_chart;
                         const { transpose } = this.get();
                         const changes = clone(chart.get('metadata.data.changes', []));
                         row = hot.toPhysicalRow(row);
@@ -145,7 +145,7 @@
                 const elements = newOrder.splice(srcColumns[0], srcColumns.length);
                 const insertAt = after === undefined ? newOrder.length : after ? newOrder.indexOf(after) : 0;
                 newOrder.splice(insertAt, 0, ...elements);
-                this.store.get('dw_chart').set('metadata.data.column-order', newOrder.slice(0));
+                this.store.get().dw_chart.set('metadata.data.column-order', newOrder.slice(0));
                 this.set({ columnOrder: newOrder });
                 // update selection
                 HOT.hooks.once('afterRender', () => {
@@ -200,7 +200,7 @@
             },
 
             getColumnFormat(name) {
-                const chart = this.store.get('dw_chart');
+                const chart = this.store.get().dw_chart;
                 const colFormats = chart.get('metadata.data.column-format', {});
                 return colFormats[name] || { type: 'auto', ignore: false };
             }
@@ -232,7 +232,7 @@
                 }
             });
 
-            const chart = this.store.get('dw_chart');
+            const chart = this.store.get().dw_chart;
 
             const hot = new HOT(this.refs.hot, {
                 data: [],
@@ -242,7 +242,7 @@
                 },
                 colHeaders: true,
                 fixedRowsTop: 1,
-                fixedColumnsLeft: this.get('fixedColumnsLeft'),
+                fixedColumnsLeft: this.get().fixedColumnsLeft,
                 filters: true,
                 dropdownMenu: true,
                 startRows: 13,
@@ -378,7 +378,7 @@
         }
         // find column index
         const colIndex = +app.refs.hot.querySelector(`.htCore tbody tr:first-child td:nth-child(${thIndex + 1})`).dataset.column;
-        const chart = app.store.get('dw_chart');
+        const chart = app.store.get().dw_chart;
         const { activeColumn, hot } = app.get();
         if (chart.dataset().hasColumn(colIndex)) {
             const newActive = chart.dataset().column(+colIndex);
