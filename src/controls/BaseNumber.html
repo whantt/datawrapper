@@ -4,11 +4,13 @@
     max="{max_*multiply_}"
     step="{step_*multiply_}"
     on:input="update()"
+    on:change="update()"
     bind:value="value2"
 />&nbsp;&nbsp;{/if}<input
     type="number"
     min="{min_*multiply_}"
     on:input="update()"
+    on:change="update()"
     max="{max_*multiply_}"
     step="{step_*multiply_}"
     style="{slider_?'margin-left:10px':''}"
