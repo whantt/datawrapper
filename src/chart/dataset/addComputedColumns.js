@@ -39,7 +39,7 @@ export default function(chart, dataset) {
             .map((row, rowIndex) => {
                 var context = [];
                 context.push('var __row = ' + rowIndex + ';');
-                row.forEach((val, key) => {
+                _.forEach(row, (val, key) => {
                     if (!columnNameToVar[key]) return;
                     context.push('var ' + columnNameToVar[key] + ' = ' + JSON.stringify(val) + ';');
                     if (dataset.column(key).type() === 'number') {
