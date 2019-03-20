@@ -22,7 +22,7 @@ build('highlight');
 build('editor');
 build('account');
 
-targets.push({
+add('render', {
     input: 'render/index.js',
     output: {
         name: 'render',
@@ -47,7 +47,7 @@ targets.push({
     ]
 });
 
-targets.push({
+add('embed', {
     input: 'embed/index.js',
     output: {
         name: 'embed',
@@ -70,6 +70,15 @@ targets.push({
 
 export default targets;
 
+function add(appId, rollupConfig) {
+    if (process.env.ROLLUP_TARGET) {
+        if (appId !== process.env.ROLLUP_TARGET) {
+            return;
+        }
+    }
+    targets.push(rollupConfig);
+}
+
 function build(appId, opts) {
     const { noAMD, entry, append } = Object.assign(
         {
@@ -79,12 +88,7 @@ function build(appId, opts) {
         },
         opts
     );
-    if (process.env.ROLLUP_TARGET) {
-        if (appId !== process.env.ROLLUP_TARGET) {
-            return;
-        }
-    }
-    targets.push({
+    add(appId, {
         input: `${appId}/${entry}`,
         external: ['chroma', 'Handsontable', 'cm', 'vendor', '/static/vendor/jschardet/jschardet.min.js', '/static/vendor/xlsx/xlsx.full.min.js'],
         output: {
