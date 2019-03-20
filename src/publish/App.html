@@ -204,7 +204,6 @@
     import { __ } from '../shared/l10n';
     import { trackEvent } from '../shared/analytics';
     import { getJSON, postJSON } from '../shared/utils';
-    import computeEmbedHeights from './compute-embed-heights';
 
     let fakeProgress = 0;
     let initial_auto_publish = true;
@@ -267,8 +266,6 @@
                     progress: 0,
                     publish_error: false
                 });
-                // generate embed codes
-                chart.metadata.publish['embed-heights'] = computeEmbedHeights(chart, me.get('embed_templates'));
                 // update charts
                 me.set({ chart });
                 // save embed heights and wait until it's done before
