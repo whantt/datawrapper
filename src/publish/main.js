@@ -1,3 +1,5 @@
+// publish_old.js
+
 /* eslint camelcase: "off" */
 import App from './App.html';
 
