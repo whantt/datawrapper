@@ -7,6 +7,13 @@
     import ControlGroup from './ControlGroup.html';
 
     export default {
-        components: { ControlGroup, BaseNumber }
+        components: { ControlGroup, BaseNumber },
+        data() {
+            return {
+                width: '100px',
+                multiply: 1,
+                slider: true
+            };
+        }
     };
 </script>
