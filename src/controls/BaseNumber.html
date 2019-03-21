@@ -4,13 +4,12 @@
     max="{max_*multiply_}"
     step="{step_*multiply_}"
     on:input="update()"
-    on:change="update()"
     bind:value="value2"
 />&nbsp;&nbsp;{/if}<input
     type="number"
+    ref:input
     min="{min_*multiply_}"
     on:input="update()"
-    on:change="update()"
     max="{max_*multiply_}"
     step="{step_*multiply_}"
     style="{slider_?'margin-left:10px':''}"
@@ -56,7 +55,9 @@
     export default {
         data() {
             return {
-                value2: null
+                value2: null,
+                unit: '',
+                multiply: 1
             };
         },
         computed: {
@@ -88,7 +89,10 @@
                 this.set({ value });
             }
         },
-        onstate({ changed, current, previous }) {
+        // eslint-disable-next-line
+        onupdate({ changed, current, previous }) {
+            // eslint-disable-next-line
+            if (!this.refs.input) return;
             if (changed.value || !previous) {
                 const value2 = +(current.value * current.multiply_).toFixed(-Math.round(Math.log(current.step_ * current.multiply_) / Math.LN10));
                 this.set({ value2 });
