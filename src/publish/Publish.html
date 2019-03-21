@@ -395,6 +395,8 @@
             },
 
             select(action, event) {
+                window.location.hash = action.id;
+
                 event.preventDefault();
                 const { active_action } = this.get();
                 if (action.id === active_action) {
