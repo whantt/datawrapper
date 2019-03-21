@@ -22,7 +22,7 @@ const storeChanges = _.debounce((chart, callback) => {
 const storeData = _.debounce((chart, callback) => {
     const data = chart.getMetadata('data.json') ? JSON.stringify(chart.dataset()) : chart.rawData();
     // const data = chart.rawData();
-    putJSON(`/api/2/charts/${chart.get('id')}/data`, data, () => {
+    putJSON(`/api/2/charts/${chart.get().id}/data`, data, () => {
         if (callback) callback();
     });
 }, 1000);
@@ -64,7 +64,9 @@ class Chart extends Store {
             this._dataset = jsonData
                 ? ds
                 : reorderColumns(this, applyChanges(this, addComputedColumns(this, ds === true ? this._dataset_cache : ds)));
-            if (jsonData) this.set({ dataset: ds });
+            if (jsonData) {
+                this.set({ dataset: ds });
+            }
             return this._dataset;
         }
         // return current dataset

@@ -40,7 +40,7 @@ require(['{{workflow.module}}'], function(mod) {
         locales: {{chartLocales|json|raw}},
         actions: {{chartActions|json|raw}},
         themes: {{userThemes|json|raw}},
-        dataset: chartData ? JSON.parse(chartData) : {}
+        dataset: {}
     });
 
     {% if publishLogic %}
@@ -115,6 +115,7 @@ chart.set({
     });
 
     var chartData = {{chart.loadData()|json|raw}};//'.replace(/\n/g, '\\n');
+
     chart.load(chartData || 'X.1').then(function() {
         var app = mod.app = new App({
             store: chart,
