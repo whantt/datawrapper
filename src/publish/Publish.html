@@ -475,9 +475,6 @@
                 data.shareurl_type = current.shareurl_type;
                 window.dw.backend.setUserData(data);
             }
-            if (changed.published) {
-                window.document.querySelector('.dw-create-publish .publish-step').classList[current.published ? 'add' : 'remove']('is-published');
-            }
             if (changed.auto_publish) {
                 if (current.auto_publish && initial_auto_publish) {
                     this.publish();

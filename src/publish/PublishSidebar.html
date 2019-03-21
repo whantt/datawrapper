@@ -15,17 +15,20 @@
             };
         },
         oncreate() {
-            this.store.observe('publishLogic', cfg => {
-                if (cfg) {
-                    loadStylesheet(cfg.css);
-                    loadScript(cfg.src, () => {
-                        require([cfg.mod], mod => {
-                            this.set({ PublishLogic: mod.App });
-                            this.refs.publish.set(cfg.data);
+            this.store.on('state', ({ current, changed }) => {
+                if (changed.publishLogic) {
+                    const cfg = current.publishLogic;
+                    if (cfg) {
+                        loadStylesheet(cfg.css);
+                        loadScript(cfg.src, () => {
+                            require([cfg.mod], mod => {
+                                this.set({ PublishLogic: mod.App });
+                                this.refs.publish.set(cfg.data);
+                            });
                         });
-                    });
-                } else {
-                    this.set({ PublishLogic });
+                    } else {
+                        this.set({ PublishLogic });
+                    }
                 }
             });
         }
