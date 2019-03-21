@@ -3031,6 +3031,15 @@ body.dw h1 {
 .dw-alert-message.dw-alert-warning a {
   color: #f6d99d;
 }
+.dw-alert-message.dw-alert-black {
+  background: #222;
+  border-bottom: 1px solid #222;
+  color: white;
+  font-weight: bold;
+}
+.dw-alert-message.dw-alert-black a {
+  color: #f6d99d;
+}
 html h2 {
   font-size: 24px;
   line-height: 36px;
@@ -3106,7 +3115,7 @@ html .navbar-static-top {
 }
 .dw-logo {
   font-weight: 500;
-  color: #0063A5;
+  color: #0063a5;
   letter-spacing: -1px;
 }
 .dw-logo .wrap {
@@ -3120,7 +3129,7 @@ html .navbar-static-top {
 }
 .dw-logo-type a:hover,
 .dw-logo-type a:focus {
-  color: #0063A5;
+  color: #0063a5;
   text-decoration: none;
 }
 .dw .dw-logo-sub {
@@ -3188,7 +3197,7 @@ h6 {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 .form-actions {
-  background: #F2F2F2;
+  background: #f2f2f2;
   border-radius: 0 0 10px 10px;
 }
 .well-danger .form-actions {
@@ -3231,7 +3240,7 @@ dl.dl-horizontal dd {
   }
 }
 .tooltip {
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 html .tooltip .tooltip-inner {
   background: #fff;
@@ -3247,10 +3256,10 @@ html .tooltip .tooltip-inner {
   color: #fff;
 }
 .collapse-hidden:before {
-  content: "+ ";
+  content: '+ ';
 }
 .collapse-shown:after {
-  content: "";
+  content: '';
 }
 h1.title,
 .admin h1.title {
@@ -3289,7 +3298,7 @@ h3 {
 .error .big {
   font-size: 20px;
   line-height: 30px;
-  color: #B94A48;
+  color: #b94a48;
   margin-bottom: 1em;
 }
 ul.options {
@@ -3322,7 +3331,7 @@ form.well form {
   border-bottom-color: #fff;
 }
 .btn-primary.loading:after {
-  content: url("../img/btn-loading.gif");
+  content: url('../img/btn-loading.gif');
   float: right;
   left: 1px;
   margin-left: 5px;
@@ -3376,9 +3385,9 @@ form.well form {
 }
 .ender-overlay .close-button {
   background: none repeat scroll 0 0 #333333;
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
   border-radius: 13px 13px 13px 13px;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   font-size: 15px;
   font-family: Arial;
@@ -3483,27 +3492,27 @@ form.well form {
   background-position: -96px 0;
 }
 .hide-smart {
-  position: absolute!important;
+  position: absolute !important;
   left: -10000px;
   top: 0;
   width: 100%;
 }
 select,
 textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
+input[type='text'],
+input[type='password'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='date'],
+input[type='month'],
+input[type='time'],
+input[type='week'],
+input[type='number'],
+input[type='email'],
+input[type='url'],
+input[type='search'],
+input[type='tel'],
+input[type='color'],
 .uneditable-input {
   border-radius: 1px;
 }
