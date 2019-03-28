@@ -1,21 +1,22 @@
 <div>
     {#if userDetails}
     <details user="{userDetails}" on:close="closeDetails()"></details>
-    {/if}
+    {:else}
+    <div>
+        <table class="table users">
+            <TableHeader headerItems="{columnHeaders}" on:sort="sort(event)"></TableHeader>
 
-    <table class="table users">
-        <TableHeader headerItems="{columnHeaders}" on:sort="sort(event)"></TableHeader>
-
-        <tbody class="users">
-            {#each list as user}
-            <TableRow {user} on:navigate="showDetails(event)"></TableRow>
-            {/each}
-        </tbody>
-    </table>
-
-    {#if paginationItems.length > 0}
-    <div class="pull-right">
-        <Pagination pages="{paginationItems}" on:navigate="gotoPage(event)" {currentPageNum}></Pagination>
+            <tbody class="users">
+                {#each list as user}
+                <TableRow {user} on:navigate="showDetails(event)"></TableRow>
+                {/each}
+            </tbody>
+        </table>
+        {#if paginationItems.length > 0}
+        <div class="pull-right">
+            <Pagination pages="{paginationItems}" on:navigate="gotoPage(event)" {currentPageNum}></Pagination>
+        </div>
+        {/if}
     </div>
     {/if}
 </div>
